@@ -1,0 +1,12 @@
+<% if notice %>
+  <div class="relative px-3 py-3 mb-4 border rounded bg-teal-200 border-teal-300 text-teal-800  opacity-0 opacity-100 block m-1" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <%= notice %>
+  </div>
+<% end %>
+<% if alert %>
+  <div class="relative px-3 py-3 mb-4 border rounded bg-orange-200 border-orange-300 text-orange-800  opacity-0 opacity-100 block m-1" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <%= alert %>
+  </div>
+<% end %>
