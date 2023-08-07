@@ -1,12 +1,33 @@
 <% if notice %>
-  <div class="relative px-3 py-3 mb-4 border rounded bg-teal-200 border-teal-300 text-teal-800  opacity-0 opacity-100 block m-1" role="alert">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <%= notice %>
+  <div class="fixed bottom-0 right-0 w-full flex justify-end rounded-lg opacity-60">
+    <div class="relative px-3 py-3 mb-4 border rounded-xl bg-teal-200 border-teal-300 text-teal-800  opacity-0 opacity-100 block m-1 w-1/2 flash" role="alert">
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <%= notice %>
+  </div>
   </div>
 <% end %>
 <% if alert %>
-  <div class="relative px-3 py-3 mb-4 border rounded bg-orange-200 border-orange-300 text-orange-800  opacity-0 opacity-100 block m-1" role="alert">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <%= alert %>
+  <div class="fixed bottom-0 right-0 w-full flex justify-end rounded-lg opacity-60">
+    <div class="relative px-3 py-3 mb-4 border rounded-xl bg-teal-200 border-teal-300 text-teal-800  opacity-0 opacity-100 block m-1 w-1/2 flash" role="alert">
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <%= alert %>
+  </div>
   </div>
 <% end %>
+
+<script>
+$(document).ready(function () {
+  // Hide the .flash element after 2 seconds
+
+  setTimeout(function() {
+    $(".flash").fadeOut(1000, function() {
+      if ($(this).is(":hidden")) {
+        console.log("Element successfully hidden.");
+      } else {
+        console.log("Animation interrupted or failed.");
+      }
+    });
+  }, 3000);
+});
+
+</script>
