@@ -37,7 +37,12 @@ end
 RSpec.describe Item, :item, type: :model do
 
 
-  # TODO:
+  # TODO: It should have an item type
+  # TODO: It should have a title
+  # TODO: It should have a description
+  # TODO: It should have a price
+  # TODO: It should have an owner as a user
+  # TODO: It should have availability as a boolean that defaults to true
 end
 
 RSpec.describe Transaction, :transaction, type: :model do

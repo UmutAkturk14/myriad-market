@@ -1,6 +1,20 @@
+<h2>Properties</h2>
+<ul>
+  <% Property::ARCHITECTURAL_PROPERTIES.each do |p| %>
+  <li><%= p %></li>
+  <% end %>
+</ul>
 
-<% if user_signed_in? %>
-  <h1>You are signed in</h1>
-<% else %>
-  <h1>You are not signed in</h1>
-<% end %>
+<h2>Vehicles</h2>
+<ul>
+  <% Vehicle::VEHICLE_TYPES.each do |p| %>
+  <li><%= p %></li>
+  <% end %>
+</ul>
+
+<h2>Services</h2>
+<ul>
+  <% Service::SERVICES.each do |p| %>
+  <li><%= p %></li>
+  <% end %>
+</ul>

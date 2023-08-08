@@ -89,3 +89,6 @@ gem 'phonelib'
 
 # City State
 gem 'city-state'
+
+# Factory Bot
+gem "factory_bot_rails"

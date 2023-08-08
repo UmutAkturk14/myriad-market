@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validate :username_validation
   validates :username, presence: true
   validates :full_name, presence: true
-  before_commit :symbolise_country
+  after_validation :arrange_attributes
 
   def password_complexity
     if password.present?
@@ -26,9 +26,8 @@ class User < ApplicationRecord
     end
   end
 
-  def symbolise_country
-    if country.present?
-      country = CS.countries.key(country)
-    end
+  def arrange_attributes
+    self.full_name = full_name.titleize
+    self.username = "/#{username}"
   end
 end
