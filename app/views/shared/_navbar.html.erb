@@ -24,7 +24,7 @@
           </svg>
         </button>
       </div>
-      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+      <div class="flex flex-1 items-center justify-center md:items-stretch sm:justify-start">
         <div class="flex flex-shrink-0 items-center">
           <%= link_to root_path do %>
             <%= image_tag asset_path('brand-logo.svg'), class: "h-16 w-16" %>
@@ -118,7 +118,7 @@ $(document).ready(function () {
 
   $("#mobile-menu-button").click(function () {
     console.log("button clicked")
-    $("#mobile-menu").toggle();
+    $("#mobile-menu").slideToggle();
   })
 
 });

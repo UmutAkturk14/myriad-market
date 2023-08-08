@@ -59,6 +59,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "dotenv-rails"
+  gem 'rspec-rails', '~> 6.0.0'
 
 end
 
@@ -80,4 +81,11 @@ group :test do
   gem "webdrivers"
 end
 
+# Tailwind
 gem "tailwindcss-rails", "~> 2.0"
+
+# Phonelib
+gem 'phonelib'
+
+# City State
+gem 'city-state'
