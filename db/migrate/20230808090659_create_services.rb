@@ -3,7 +3,7 @@ class CreateServices < ActiveRecord::Migration[7.0]
     create_table :services do |t|
       t.string :service_type
       t.string :title
-      t.integer :hourly_rate, limit: 6
+      t.integer :hourly_rate
       t.string :location
       t.text :description
 

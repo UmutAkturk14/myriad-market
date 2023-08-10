@@ -14,14 +14,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_090659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "items", force: :cascade do |t|
-    t.string "itemable_type", null: false
-    t.bigint "itemable_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["itemable_type", "itemable_id"], name: "index_items_on_itemable"
-  end
-
   create_table "offers", force: :cascade do |t|
     t.string "offerable_type", null: false
     t.bigint "offerable_id", null: false
@@ -37,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_090659) do
     t.integer "square_feet"
     t.integer "age"
     t.integer "floor"
-    t.bigint "price"
+    t.integer "price"
     t.string "address"
     t.string "city"
     t.string "state"
@@ -49,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_090659) do
   create_table "services", force: :cascade do |t|
     t.string "service_type"
     t.string "title"
-    t.bigint "hourly_rate"
+    t.integer "hourly_rate"
     t.string "location"
     t.text "description"
     t.datetime "created_at", null: false
@@ -79,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_090659) do
     t.string "model"
     t.integer "year"
     t.integer "mileage"
-    t.bigint "price"
+    t.integer "price"
     t.string "fuel_type"
     t.string "transmission"
     t.text "description"

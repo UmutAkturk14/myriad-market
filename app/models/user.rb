@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates :full_name, presence: true
   after_validation :arrange_attributes
 
+  private
+
   def password_complexity
     if password.present?
        if !password.match(/^(?=.*[a-z])(?=.*[A-Z])/)
@@ -28,6 +30,9 @@ class User < ApplicationRecord
 
   def arrange_attributes
     self.full_name = full_name.titleize
-    self.username = "/#{username}"
+  end
+
+  def symbolise_country
+    self.country = CS.countries.key(country)
   end
 end

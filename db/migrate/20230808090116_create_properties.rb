@@ -7,7 +7,7 @@ class CreateProperties < ActiveRecord::Migration[7.0]
       t.integer :square_feet
       t.integer :age
       t.integer :floor
-      t.integer :price, limit: 12
+      t.integer :price
       t.string :address
       t.string :city
       t.string :state

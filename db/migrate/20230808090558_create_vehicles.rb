@@ -6,7 +6,7 @@ class CreateVehicles < ActiveRecord::Migration[7.0]
       t.string :model
       t.integer :year
       t.integer :mileage
-      t.integer :price, limit: 12
+      t.integer :price
       t.string :fuel_type
       t.string :transmission
       t.text :description
