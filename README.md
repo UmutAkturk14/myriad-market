@@ -29,7 +29,7 @@ MM | Myriad Market is a versatile and dynamic online marketplace web application
 - **Database:** PostgreSQL, a powerful and reliable relational database, stores and manages the application's data efficiently.
 
 - **Frontend:** The frontend is developed using Tailwind CSS for responsive and modern design, while jQuery enhances user interaction.
-- 
+
 - **Design:** Logos and icons are made using Inkscape.
 
 ## Getting Started
