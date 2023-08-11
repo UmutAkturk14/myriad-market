@@ -1,5 +1,7 @@
 class Vehicle < ApplicationRecord
   has_many :offers, as: :offerable
+  has_many_attached :photos
+  belongs_to :user
 
   # Vehicle types to use in forms
   VEHICLE_TYPES = [
@@ -29,4 +31,7 @@ class Vehicle < ApplicationRecord
     "Submarine",
     "Spacecraft"
   ]
+
+  validates :vehicle_type, :make, :model, :year, :mileage, :price, :fuel_type, :transmission, :description, :user, presence: true
+  validates :vehicle_type, inclusion: { in: VEHICLE_TYPES }
 end

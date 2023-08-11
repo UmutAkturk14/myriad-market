@@ -1,5 +1,7 @@
 class Service < ApplicationRecord
   has_many :offers, as: :offerable
+  has_many_attached :photos
+  belongs_to :user
 
   # Service types to use in forms
   SERVICES = [
@@ -42,5 +44,7 @@ class Service < ApplicationRecord
     "Legal Services",
     "Financial Consulting"
   ].sort
+
+  validates :service_type, :title, :hourly_rate, :location, :description, :user, presence: true
 
 end
