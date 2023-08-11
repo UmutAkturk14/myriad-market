@@ -1,6 +1,28 @@
+<section id="homepage-grids" class="grid grid-cols-2 gap-4">
+  <article class="grid gap-2 max-w-md p-2 text-center">
+    <h2 class="bg-teal-500">Properties</h2>
+    <ul class="grid gap-2">
+      <% Property::ARCHITECTURAL_PROPERTIES.each do |p| %>
+      <li class="bg-blue-300"><%= p %></li>
+      <% end %>
+    </ul>
 
-<% if user_signed_in? %>
-  <h1>You are signed in</h1>
-<% else %>
-  <h1>You are not signed in</h1>
-<% end %>
+    <h2 class="bg-teal-500">Vehicles</h2>
+    <ul>
+      <% Vehicle::VEHICLE_TYPES.each do |p| %>
+      <li class="bg-blue-300"><%= p %></li>
+      <% end %>
+    </ul>
+
+    <h2 class="bg-teal-500">Services</h2>
+    <ul>
+      <% Service::SERVICES.each do |p| %>
+      <li class="bg-blue-300"><%= p %></li>
+      <% end %>
+    </ul>
+  </article>
+
+  <article class="grid grid-cols-6 gap-3">
+    <%# Here goes the items %>
+  </article>
+</section>

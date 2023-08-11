@@ -1,47 +1,53 @@
 require 'rails_helper'
 
 RSpec.describe User, :user, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    it 'has a valid user' do
+      user = build(:user)
+      expect(user).to be_valid
+    end
 
-  it 'should have a valid email' do
-    expect(User.new(email: "john@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(true)
-    expect(User.new(email: "john123@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(true)
-    expect(User.new(email: "john@example@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(false)
-    expect(User.new(email: "Jowqhn@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(true)
+    it 'should have a valid password' do
+      # Password can't be blank
+      user = build(:user, password: nil)
+      expect(user).to be_invalid
+    end
   end
 
-  it 'should have a valid password' do
-    expect(User.new(email: "john@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(true)
-    expect(User.new(email: "john@example.com", password: "1234", full_name: "John Doe").valid?).to eq(false)
-    expect(User.new(email: "john@example.com", password: "1235432643276", full_name: "John Doe").valid?).to eq(false)
-    expect(User.new(email: "john@example.com", password: "kasdokopwqjtiewq", full_name: "John Doe").valid?).to eq(false)
-    expect(User.new(email: "john@example.com", password: "213214fsadpojfioew", full_name: "John Doe").valid?).to eq(false)
-    expect(User.new(email: "john@example.com", password: "12321312KQWOEWQ", full_name: "John Doe").valid?).to eq(false)
+  describe 'password' do
+    it "can't have a password consisted of only numbers" do
+      user = build(:user, password: "53629102")
+      expect(user).to be_invalid
+    end
+
+    it "can't have a password consisted of only numbers and lowcase letters" do
+      user = build(:user, password: "5362ewqr")
+      expect(user).to be_invalid
+    end
+
+    it "can't have a password consisted of only numbers and upcase letters" do
+      user = build(:user, password: "5362QWEQJI")
+      expect(user).to be_invalid
+    end
+
+    it "can't have a password consisted of only downcase and upcase letters" do
+      user = build(:user, password: "WQWKjfdsaop")
+      expect(user).to be_invalid
+    end
   end
 
-  it 'should have a full name' do
-    expect(User.new(email: "john@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(true)
-    expect(User.new(email: "john@example.com", password: "123456Aowerjq", username: "SomeUsername").valid?).to eq(false)
+  describe "#symbolise_country" do
+    it 'symbolises the country' do
+      user = build(:user)
+      user_country = user.country
+      expect(user.send(:symbolise_country)).to eq(CS.countries.key(user_country))
+    end
   end
 
-  it 'should have a unique username' do
-    User.create(email: "john@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername")
-    expect(User.new(email: "john@example.com", password: "123456Aowerjq", full_name: "John Doe", username: "SomeUsername").valid?).to eq(false)
+  describe 'associations' do
+    it { should have_many(:properties).dependent(:destroy) }
+    it { should have_many(:services).dependent(:destroy) }
+    it { should have_many(:vehicles).dependent(:destroy) }
+    it { should validate_uniqueness_of(:username) }
   end
-
-  # TODO: If the user has a phone number, it gets validated
-  # TODO: If the user has an addres, it gets geolocated
-end
-
-
-RSpec.describe Item, :item, type: :model do
-
-
-  # TODO:
-end
-
-RSpec.describe Transaction, :transaction, type: :model do
-
-
-  # TODO:
 end

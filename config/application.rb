@@ -17,6 +17,9 @@ module MyriadMarket
     config.load_defaults 7.0
     config.assets.precompile += %w(*.svg)
 
+    # Factory bot configuration
+    config.factory_bot.definition_file_paths = ["custom/factories"]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

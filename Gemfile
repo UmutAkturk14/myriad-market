@@ -55,11 +55,17 @@ gem "inline_svg"
 gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
+gem "dotenv-rails", groups: [:development, :test]
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem "dotenv-rails"
+  # Rspec
   gem 'rspec-rails', '~> 6.0.0'
+  # Factory bot
+  gem 'factory_bot_rails'
+  # Shoulda matchers
+  gem 'shoulda-matchers', '~> 5.0'
 
 end
 
@@ -89,3 +95,12 @@ gem 'phonelib'
 
 # City State
 gem 'city-state'
+
+# Faker gem
+gem 'faker'
+
+# Cloudinary
+gem "cloudinary"
+
+# Unsplash for seeding photos
+gem 'unsplash'
