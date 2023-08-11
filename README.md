@@ -38,11 +38,12 @@ MM | Myriad Market is a versatile and dynamic online marketplace web application
 
 To get started with MM | Myriad Market, follow these steps:
 
-1. Clone this repository: `git clone https://github.com/your-username/your-repo.git`
+1. Clone this repository: `gh repo clone UmutAkturk14/myriad-market`
 2. Install dependencies: `bundle install`
-3. Set up the database: `rails db:setup`
-4. Run the server: `rails server`
-5. Access the application in your web browser at: `http://localhost:3000`
+3. Set up API keys. This projects use `dotenvt-rails` by default, and the only API used so far is Cloudinary.
+4. Set up the database: `rails db:setup`
+5. Run the server: `rails server`
+6. Access the application in your web browser at: `http://localhost:3000`
 
 
 
