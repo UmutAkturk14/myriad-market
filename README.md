@@ -1,5 +1,7 @@
 # MM | Myriad Market - A Multi-Purpose Marketplace Web App
 
+**ATTENTION: ONGOING PROJECT!**
+
 ![Myriad Market](https://res.cloudinary.com/dypkxlg1s/image/upload/v1691740131/w5d7mz2usbstjr9d3fwx.svg)
 
 MM | Myriad Market is a versatile and dynamic online marketplace web application designed to revolutionize the way people buy, sell, rent, loan properties, vehicles, and services. With an intuitive user interface and a comprehensive set of features, MM offers a seamless platform for connecting users and facilitating transactions.
