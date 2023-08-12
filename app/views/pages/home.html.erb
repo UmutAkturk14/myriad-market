@@ -1,28 +1,37 @@
-<section id="homepage-grids" class="grid grid-cols-2 gap-4">
+<section id="homepage-grids" class="grid grid-cols-5 gap-4 mt-3">
   <article class="grid gap-2 max-w-md p-2 text-center">
-    <h2 class="bg-teal-500">Properties</h2>
-    <ul class="grid gap-2">
+    <ul class="grid gap-2 mb-4">
+      <h2 class="bg-teal-500">Properties</h2>
       <% Property::ARCHITECTURAL_PROPERTIES.each do |p| %>
       <li class="bg-blue-300"><%= p %></li>
       <% end %>
     </ul>
 
-    <h2 class="bg-teal-500">Vehicles</h2>
-    <ul>
+    <ul class="grid gap-2 mb-4">
+      <h2 class="bg-teal-500">Vehicles</h2>
       <% Vehicle::VEHICLE_TYPES.each do |p| %>
       <li class="bg-blue-300"><%= p %></li>
       <% end %>
     </ul>
 
-    <h2 class="bg-teal-500">Services</h2>
-    <ul>
+    <ul class="grid gap-2 mb-4">
+      <h2 class="bg-teal-500">Services</h2>
       <% Service::SERVICES.each do |p| %>
       <li class="bg-blue-300"><%= p %></li>
       <% end %>
     </ul>
   </article>
 
-  <article class="grid grid-cols-6 gap-3">
+  <article class="grid grid-cols-4 col-span-4 gap-3 mt-16">
     <%# Here goes the items %>
+
+    <% @offers.each do |offer| %>
+      <div class="">
+        <%= cl_image_tag offer.offerable.photos.first.key, class: "object-cover w-80 h-40 rounded-lg" %>
+        <p class="w-80 mt-1"><%= offer.title %></p>
+        <%# TODO: Link to goes here... %>
+      </div>
+    <% end %>
+
   </article>
 </section>
