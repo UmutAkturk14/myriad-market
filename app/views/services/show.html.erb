@@ -1,0 +1,17 @@
+<div>
+  <h1 class="font-bold text-4xl">Vehicles#show</h1>
+  <p>Find me in app/views/vehicles/show.html.erb</p>
+  <p><%= @service.title %></p>
+  <p><%= @service.description %></p>
+  <%= link_to "Back", "javascript:void(0);", id: "back-button" %>
+</div>
+
+
+
+<script>
+  $(document).ready(function() {
+    $("#back-button").click(function() {
+      window.history.back();
+    });
+  });
+</script>

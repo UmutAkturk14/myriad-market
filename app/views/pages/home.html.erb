@@ -1,35 +1,26 @@
 <section id="homepage-grids" class="grid grid-cols-5 gap-4 mt-3">
-  <article class="grid gap-2 max-w-md p-2 text-center">
-    <ul class="grid gap-2 mb-4">
-      <h2 class="bg-teal-500">Properties</h2>
-      <% Property::ARCHITECTURAL_PROPERTIES.each do |p| %>
-      <li class="bg-blue-300"><%= p %></li>
-      <% end %>
-    </ul>
+  <article class="grid gap-2 max-w-md p-2 text-center hidden xl:grid">
+    <%# Categories hash %>
+    <% categories = {
+        "Properties" => Property::ARCHITECTURAL_PROPERTIES,
+        "Vehicles" => Vehicle::VEHICLE_TYPES,
+        "Services" => Service::SERVICES
+      } %>
 
-    <ul class="grid gap-2 mb-4">
-      <h2 class="bg-teal-500">Vehicles</h2>
-      <% Vehicle::VEHICLE_TYPES.each do |p| %>
-      <li class="bg-blue-300"><%= p %></li>
-      <% end %>
-    </ul>
-
-    <ul class="grid gap-2 mb-4">
-      <h2 class="bg-teal-500">Services</h2>
-      <% Service::SERVICES.each do |p| %>
-      <li class="bg-blue-300"><%= p %></li>
-      <% end %>
-    </ul>
+    <%# Render categories, category_list(title, items, ul_class, li_class, h2_class) %>
+    <% categories.each do |category, items| %>
+      <%= category_list(category, items, "grid gap-2 mb-4", "bg-blue-300", "bg-teal-500") %>
+    <% end %>
   </article>
 
-  <article class="grid grid-cols-4 col-span-4 gap-3 mt-16">
-    <%# Here goes the items %>
+
+  <article class="grid grid-cols-1 md:grid-cols-2 md:col-span2 xl:grid-cols-4 xl:col-span-4 col-span-5 gap-3 mt-16 content-center w-full">
+
+    <%# Render offers for homepage %>
 
     <% @offers.each do |offer| %>
-      <div class="">
-        <%= cl_image_tag offer.offerable.photos.first.key, class: "object-cover w-80 h-40 rounded-lg" %>
-        <p class="w-80 mt-1"><%= offer.title %></p>
-        <%# TODO: Link to goes here... %>
+      <div class="p-6 w-full md:hover:bg-yellow-100 xl:hover:scale-110 md:hover:shadow-sm rounded-xl transition duration-600 flex flex-col content-center">
+        <%= offerable_link(offer) %>
       </div>
     <% end %>
 
