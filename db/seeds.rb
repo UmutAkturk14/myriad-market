@@ -92,3 +92,10 @@ Offer.all.each do |o|
   o.title = Faker::Lorem.paragraph
   o.save!
 end
+
+# 3.times do
+#   puts "adding photo..."
+#   file = URI.open("https://source.unsplash.com/random?old-cars")
+#   vehicle = Vehicle.find(6)
+#   vehicle.photos.attach(io: file, filename: "nes.png", content_type: "image/png")
+# end
