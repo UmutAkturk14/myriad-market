@@ -1,0 +1,26 @@
+<%# Carousel items %>
+<div class="relative w-full overflow-hidden after:clear-both after:block after:content-[''] h-[24rem] sm:h-[28rem] md:h-[32rem] lg:h-[46rem]" id="carousel-items">
+  <% item.photos.each_with_index do |photo, index| %>
+    <div class="relative hidden float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none" style="backface-visibility: hidden" id="carousel-item-<%= index %>">
+      <%= cl_image_tag photo.key, class: "w-full h-[24rem] sm:h-[28rem] md:h-[32rem] lg:h-[40rem] object-cover p-2 md:p-4 xl:p-6 rounded-3xl carousel-image" %>
+    </div>
+  <% end %>
+</div>
+
+
+<%# Carousel controls %>
+<% unless item.photos.count == 1 %>
+  <button class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none carousel-control" type="button" data-te-slide="prev" id="prev-button">
+    <span class="inline-block h-8 w-8">
+      <%# Previous button  %>
+    </span>
+    <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Previous</span>
+  </button>
+
+  <button class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none carousel-control" type="button" data-te-slide="next" id="next-button">
+    <span class="inline-block h-8 w-8">
+      <%# Next button  %>
+    </span>
+    <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Next</span>
+  </button>
+<% end %>
