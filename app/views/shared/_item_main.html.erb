@@ -1,0 +1,107 @@
+<%= render "shared/offer_header", offer: Offer.find_by(offerable: item) %>
+
+  <%# TODO:  Main %>
+
+  <main class="flex justify-center">
+    <div id="description" class="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 p-4">
+      <%= content_tag(:p, item.description) %>
+    </div>
+
+    <div id="specifications" class="hidden w-full md:w-3/4 lg:w-1/2 xl:w-2/5 p-4">
+
+      <% item.attribute_names.each do |attribute| %>
+        <% next if ['description', 'title'].include?(attribute)  %>
+        <div class="flex justify-between">
+          <p class="text-blue-700"><strong><%= attribute.humanize %></strong></p>
+          <p class="text-red-500">
+            <strong>
+              <% if ['created_at', 'updated_at'].include?(attribute) %>
+                <%= item.send(attribute).strftime('%d %B %Y') %>
+              <% elsif attribute == "user_id" %>
+                <%# TODO: Add a link here, it'll send the user to the bottom of the page %>
+                <%= item.user.full_name %>
+              <% else %>
+                <%= item.send(attribute) %>
+              <% end %>
+            </strong>
+          </p>
+        </div>
+      <% end %>
+
+      <div class="flex justify-between">
+        <p class="text-blue-700"><strong>Address</strong></p>
+        <p class="text-red-500"><strong><%= item.user.address %> / <%= item.user.country %></strong></p>
+      </div>
+
+    </div>
+
+    <%# TODO: Geolocation. Map goes here. %>
+    <div id="location" class="hidden w-full md:w-3/4 lg:w-1/2 xl:w-2/5 p-4">
+      <p>Here is location</p>
+    </div>
+
+
+
+  </main>
+
+
+  <%# TODO:  Profile %>
+
+  <%= link_to "Back", "javascript:void(0);", id: "back-button" %>
+</div>
+
+<div class="flex flex-col justify-center items-center h-[100vh]">
+  <div class="relative flex flex-col items-center rounded-[20px] w-full sm:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto p-1 bg-white bg-clip-border shadow-xl  text-white">
+      <div class="relative flex h-32 w-full p-4 justify-center rounded-xl bg-cover" >
+          <img src='https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png' class="absolute flex h-32 w-full justify-center rounded-xl bg-cover">
+          <% if item.user.profile_photo.key %>
+            <div class="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 !border-navy-700">
+              <%= cl_image_tag item.user.profile_photo.key, class: "h-full w-full rounded-full" %>
+            </div>
+          <% else %>
+            <%= image_tag asset_path('user_icon'), class: "absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-gray-100 !border-navy-700" %>
+          <% end %>
+      </div>
+      <div class="mt-16 flex flex-col items-center">
+          <h4 class="text-xl font-bold text-navy-700 text-black">
+          <%= item.user.full_name %>
+          </h4>
+          <p class="text-base font-normal text-gray-600"><%= item.user.country %></p>
+      </div>
+      <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
+          <div class="flex flex-col items-center justify-center">
+          <p class="text-2xl font-bold text-navy-700 text-black">17</p>
+          <p class="text-sm font-normal text-gray-600">All offers</p>
+          </div>
+          <div class="flex flex-col items-center justify-center">
+          <p class="text-2xl font-bold text-navy-700 text-black">
+              9.7K
+          </p>
+          <p class="text-sm font-normal text-gray-600">Message</p>
+          </div>
+          <div class="flex flex-col items-center justify-center">
+          <p class="text-2xl font-bold text-navy-700 text-black">
+              434
+          </p>
+          <p class="text-sm font-normal text-gray-600">Book this offer</p>
+          </div>
+      </div>
+  </div>
+  <p class="font-normal text-navy-700 mt-20 mx-auto w-max">Profile Card component from <a href="https://horizon-ui.com?ref=tailwindcomponents.com" target="_blank" class="text-brand-500 font-bold">Horizon UI Tailwind React</a></p>
+</div>
+
+
+
+
+
+<script>
+  $("#group-buttons button").click(function(e) {
+    $(this).siblings().removeClass("bg-gray-100 text-blue-700");
+    $(this).addClass("bg-gray-100 text-blue-700");
+
+    const content = $(`#${this.id.split("-")[1]}`)
+    content.siblings().hide();
+    content.show();
+
+  });
+</script>
