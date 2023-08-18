@@ -37,8 +37,8 @@
 
     <%# TODO: Geolocation. Map goes here. %>
     <p>Here is location</p>
-    <div id="location" class="hidden w-full md:w-3/4 lg:w-1/2 xl:w-2/5 p-4">
-      <div class="shadow-xl" style="width: 100%; height: 600px;"
+    <div id="location" class="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 flex justify-center">
+      <div class="shadow-xl" style="width: 730px; height: 610px;"
         data-controller="map"
         data-map-markers-value="<%= @markers.to_json %>"
         data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
@@ -72,20 +72,19 @@
       </div>
       <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
           <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold text-navy-700 text-black">17</p>
-          <p class="text-sm font-normal text-gray-600">All offers</p>
+          <%= link_to "#", class: "flex justify-center align-center" do %>
+            <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden sm:block">All offers(here goes how many offers that profile has)</button>
+          <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold text-navy-700 text-black">
-              9.7K
-          </p>
-          <p class="text-sm font-normal text-gray-600">Message</p>
+          <%= link_to "#", class: "flex justify-center align-center" do %>
+            <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden sm:block">Message</button>
+          <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold text-navy-700 text-black">
-              434
-          </p>
-          <p class="text-sm font-normal text-gray-600">Book this offer</p>
+          <%= link_to "#", class: "flex justify-center align-center" do %>
+            <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden sm:block">Buy/Loan this item</button>
+          <% end %>
           </div>
       </div>
   </div>
@@ -107,6 +106,10 @@ $(document).ready(function () {
     content.siblings().hide();
     content.show();
   });
+
+
+  $("#location").addClass("hidden p-1 md:p-2 lg:p-4 xl:p-6");
+  console.log($("canvas"));
 });
 
 
