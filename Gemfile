@@ -104,3 +104,9 @@ gem "cloudinary"
 
 # Unsplash for seeding photos
 gem 'unsplash'
+
+# Geocoder
+gem "geocoder"
+
+# Pundit
+gem "pundit"

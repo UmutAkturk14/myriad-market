@@ -3,5 +3,9 @@ class VehiclesController < ApplicationController
 
   def show
     @vehicle = Vehicle.find(params[:id])
+    authorize @vehicle
+    offer = Offer.find_by(offerable: @vehicle)
+
+    @markers =  [ lat: offer.latitude, lng: offer.longitude ]
   end
 end
