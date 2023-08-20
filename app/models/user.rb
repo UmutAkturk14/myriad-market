@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :properties, dependent: :destroy
   has_many :services, dependent: :destroy
   has_many :vehicles, dependent: :destroy
+  has_many :offers
 
   has_one_attached :profile_photo
   # ! This screws things up in the tests, can't figure out why

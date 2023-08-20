@@ -4,6 +4,7 @@ class ServicesController < ApplicationController
   def show
     @service = Service.find(params[:id])
     authorize @service
+    @user = @service.user
     @offer = Offer.find_by(offerable: @service)
 
     @markers =  [ lat: @offer.latitude, lng: @offer.longitude ]
