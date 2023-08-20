@@ -36,16 +36,18 @@
     </div>
 
     <%# TODO: Geolocation. Map goes here. %>
-    <div id="location" class="hidden w-full md:w-3/4 lg:w-1/2 xl:w-2/5 p-4">
-      <p>Here is location</p>
+    <p>Here is location</p>
+    <div id="location" class="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 flex justify-center">
+      <div class="shadow-xl overflow-hidden" style="width: 730px; height: 610px;"
+        data-controller="map"
+        data-map-markers-value="<%= @markers.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
     </div>
-
-
-
   </main>
 
-
   <%# TODO:  Profile %>
+
 
   <%= link_to "Back", "javascript:void(0);", id: "back-button" %>
 </div>
@@ -70,38 +72,48 @@
       </div>
       <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
           <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold text-navy-700 text-black">17</p>
-          <p class="text-sm font-normal text-gray-600">All offers</p>
+          <%= link_to user_profile_path(user), class: "flex justify-center align-center" do %>
+            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Other offers</button>
+          <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold text-navy-700 text-black">
-              9.7K
-          </p>
-          <p class="text-sm font-normal text-gray-600">Message</p>
+          <%= link_to "#", class: "flex justify-center align-center" do %>
+            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Message</button>
+          <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold text-navy-700 text-black">
-              434
-          </p>
-          <p class="text-sm font-normal text-gray-600">Book this offer</p>
+          <%= link_to "#", class: "flex justify-center align-center" do %>
+            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Buy/Loan</button>
+          <% end %>
           </div>
       </div>
   </div>
-  <p class="font-normal text-navy-700 mt-20 mx-auto w-max">Profile Card component from <a href="https://horizon-ui.com?ref=tailwindcomponents.com" target="_blank" class="text-brand-500 font-bold">Horizon UI Tailwind React</a></p>
 </div>
 
 
-
-
-
 <script>
-  $("#group-buttons button").click(function(e) {
-    $(this).siblings().removeClass("bg-gray-100 text-blue-700");
-    $(this).addClass("bg-gray-100 text-blue-700");
 
-    const content = $(`#${this.id.split("-")[1]}`)
+$(document).ready(function () {
+  const groupButtons = $("#group-buttons button");
+  const locationContent = $("#location");
+
+  groupButtons.on("click", function() {
+    const $this = $(this);
+    const buttonId = $this.attr("id");
+    const contentId = buttonId.split("-")[1];
+    const content = $(`#${contentId}`);
+    const $siblings = $this.siblings();
+
+    $siblings.removeClass("bg-gray-100 text-blue-700");
+    $this.addClass("bg-gray-100 text-blue-700");
+
     content.siblings().hide();
     content.show();
-
   });
+
+  locationContent.addClass("hidden p-1 md:p-2 lg:p-4 xl:p-6");
+});
+
+
+
 </script>

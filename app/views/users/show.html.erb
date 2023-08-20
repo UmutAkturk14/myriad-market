@@ -1,0 +1,7 @@
+<article class="grid grid-cols-1 md:grid-cols-2 md:col-span-5 xl:grid-cols-4 xl:col-span-4 col-span-5 gap-3 mt-3 content-center w-full">
+  <% @offers.each do |offer| %>
+    <div class="p-6 w-full md:hover:bg-yellow-100 xl:hover:scale-110 md:hover:shadow-sm rounded-xl transition duration-600 flex flex-col content-center">
+      <%= offerable_link(offer) %>
+    </div>
+  <% end %>
+</article>
