@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_19_083049) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_113235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,7 +73,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_083049) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.string "title"
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
@@ -102,6 +101,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_083049) do
     t.string "phone_number"
     t.string "address"
     t.string "country"
+    t.string "city"
+    t.text "about"
+    t.boolean "phone_number_visible", default: false
+    t.string "account_type", default: "Personal"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -119,7 +122,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_083049) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.string "title"
     t.index ["user_id"], name: "index_vehicles_on_user_id"
   end
 

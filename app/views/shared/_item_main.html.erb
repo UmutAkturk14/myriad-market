@@ -46,19 +46,19 @@
     </div>
   </main>
 
-  <%# TODO:  Profile %>
 
 
   <%= link_to "Back", "javascript:void(0);", id: "back-button" %>
 </div>
 
+<%# TODO:  Profile %>
 <div class="flex flex-col justify-center items-center h-[100vh]">
   <div class="relative flex flex-col items-center rounded-[20px] w-full sm:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto p-1 bg-white bg-clip-border shadow-xl  text-white">
       <div class="relative flex h-32 w-full p-4 justify-center rounded-xl bg-cover" >
           <img src='https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png' class="absolute flex h-32 w-full justify-center rounded-xl bg-cover">
           <% if item.user.profile_photo.key %>
-            <div class="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 !border-navy-700">
-              <%= cl_image_tag item.user.profile_photo.key, class: "h-full w-full rounded-full" %>
+            <div class="absolute -bottom-12 flex h-[120px] w-[120px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 !border-navy-700">
+              <%= cl_image_tag item.user.profile_photo.key, class: "h-full w-full object-cover rounded-full" %>
             </div>
           <% else %>
             <%= image_tag asset_path('user_icon'), class: "absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-gray-100 !border-navy-700" %>
@@ -68,7 +68,14 @@
           <h4 class="text-xl font-bold text-navy-700 text-black">
           <%= item.user.full_name %>
           </h4>
-          <p class="text-base font-normal text-gray-600"><%= item.user.country %></p>
+
+          <% if item.user.country.present? && item.user.city.present? %>
+            <p class="text-base font-normal text-gray-600"><%= item.user.city %> / <%= item.user.country %></p>
+          <% elsif item.user.country.present? %>
+            <p class="text-base font-normal text-gray-600"><%= item.user.country %></p>
+          <% elsif item.user.city.present? %>
+            <p class="text-base font-normal text-gray-600"><%= item.user.city %></p>
+          <% end %>
       </div>
       <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
           <div class="flex flex-col items-center justify-center">
