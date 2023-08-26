@@ -135,6 +135,8 @@ GEM
     ffi (1.15.5)
     font-awesome-sass (6.4.0)
       sassc (~> 2.0)
+    friendly_id (5.4.2)
+      activerecord (>= 4.0.0)
     geocoder (1.8.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -350,6 +352,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   font-awesome-sass (~> 6.1)
+  friendly_id (~> 5.4.0)
   geocoder
   inline_svg
   jbuilder

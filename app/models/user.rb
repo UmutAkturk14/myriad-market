@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  extend FriendlyId
+  friendly_id :full_name, use: :slugged
   validate :password_complexity
   validate :username_validation
   validates :username, uniqueness: true

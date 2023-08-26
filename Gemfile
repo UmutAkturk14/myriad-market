@@ -110,3 +110,6 @@ gem "geocoder"
 
 # Pundit
 gem "pundit"
+
+# Friendly ID
+gem 'friendly_id', '~> 5.4.0'

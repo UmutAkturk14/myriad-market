@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def category_list(title, items, ul_class, li_class, h2_class)
-    content_tag(:ul, class: ul_class) do
+    content_tag(:ul, class: ul_class, id: title) do
       concat content_tag(:h2, title, class: h2_class)
       items.each do |item|
         concat content_tag(:li, item, class: li_class)
