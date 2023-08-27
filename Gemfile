@@ -113,3 +113,6 @@ gem "pundit"
 
 # Friendly ID
 gem 'friendly_id', '~> 5.4.0'
+
+# Inline SVG
+gem 'inline_svg'

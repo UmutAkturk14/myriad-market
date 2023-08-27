@@ -80,17 +80,26 @@
       <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
           <div class="flex flex-col items-center justify-center">
           <%= link_to user_profile_path(user), class: "flex justify-center align-center" do %>
-            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Other offers</button>
+            <button type="button" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+            <%= inline_svg_tag("user_icon.svg", class: "h-4 w-4") %>
+            <span>Profile</span>
+            </button>
           <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
           <%= link_to "#", class: "flex justify-center align-center" do %>
-            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Message</button>
+            <button type="button" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <%= inline_svg_tag("envelope.svg", class: "h-5 w-5") %>
+              <span>Message</span>
+            </button>
           <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
           <%= link_to "#", class: "flex justify-center align-center" do %>
-            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Buy/Loan</button>
+            <button type="button" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <%= inline_svg_tag("cash.svg", class: "h-5 w-5") %>
+              <span>Buy/Loan</span>
+            </button>
           <% end %>
           </div>
       </div>
