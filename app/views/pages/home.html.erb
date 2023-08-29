@@ -7,9 +7,9 @@
         "Services" => Service::SERVICES
       } %>
 
-    <%# Render categories, category_list(title, items, ul_class, li_class, h2_class) %>
+    <%# Render categories, category_list(title, items, ul_class, li_class, button_class) %>
     <% categories.each do |category, items| %>
-      <%= category_list(category, items, "grid mb-4 gap-2", "bg-blue-300 hover:bg-blue-500 hover:text-white rounded-xl hidden", "bg-teal-300 hover:bg-teal-500 hover:text-white rounded-xl") %>
+      <%= category_list(category, items, "grid mb-4 gap-2", "bg-blue-300 hover:bg-blue-500 hover:text-white rounded-xl hidden", "bg-teal-300 hover:bg-teal-500 hover:text-white rounded-xl cursor-default") %>
     <% end %>
   </aside>
 
@@ -37,7 +37,7 @@
   // Iterate through each menu item
   menuItems.forEach(item => {
     // When hovering over a menu item
-    $(`#${item} > h2`).click(function() {
+    $(`#${item} > button`).click(function() {
       $(`#${item} > li`).slideToggle(300);
     });
   });

@@ -1,0 +1,29 @@
+<div id="myModal" class="fixed inset-0 flex items-center justify-center hidden">
+  <div class="absolute inset-0 bg-gray-900 opacity-75"></div>
+  <div class="bg-white p-8 rounded-lg z-0 w-3/4">
+    <!-- Modal content goes here -->
+    <h2 class="text-xl font-semibold mb-4">Modal Title</h2>
+    <p>This is the modal content.</p>
+    <p>yo</p>
+    <p>yo</p>
+    <p>yo</p>
+    <p>yo</p>
+    <p>yo</p>
+    <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded">Close</button>
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+  $("#edit-button").on("click", () => {
+    $("#myModal").removeClass("hidden");
+  });
+
+  // Close modal when the close button is clicked
+  $("#closeModal").on("click", () => {
+    $("#myModal").addClass("hidden");
+  });
+});
+
+</script>
