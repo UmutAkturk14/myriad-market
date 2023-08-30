@@ -1,5 +1,5 @@
-<section id="homepage-grids" class="grid grid-cols-5 gap-4 mt-3">
-  <article class="grid gap-2 max-w-md p-2 text-center hidden xl:grid">
+<section id="homepage-grids" class="grid grid-cols-7 gap-2 mt-3">
+  <aside class="w-full p-2 text-center hidden xl:inline">
     <%# Categories hash %>
     <% categories = {
         "Properties" => Property::ARCHITECTURAL_PROPERTIES,
@@ -7,14 +7,13 @@
         "Services" => Service::SERVICES
       } %>
 
-    <%# Render categories, category_list(title, items, ul_class, li_class, h2_class) %>
+    <%# Render categories, category_list(title, items, ul_class, li_class, button_class) %>
     <% categories.each do |category, items| %>
-      <%= category_list(category, items, "grid gap-2 mb-4", "bg-blue-300", "bg-teal-500") %>
+      <%= category_list(category, items, "grid mb-4 gap-2", "bg-blue-300 hover:bg-blue-500 hover:text-white rounded-xl hidden", "bg-teal-300 hover:bg-teal-500 hover:text-white rounded-xl cursor-default") %>
     <% end %>
-  </article>
+  </aside>
 
-
-  <article class="grid grid-cols-1 md:grid-cols-2 md:col-span-5 xl:grid-cols-4 xl:col-span-4 col-span-5 gap-3 mt-3 content-center w-full">
+  <article class="grid grid-cols-1 md:grid-cols-3 md:col-span-7 xl:grid-cols-4 xl:col-span-6 col-span-7 gap-3 content-start w-full">
     <%# Filters %>
 
     <%# <div class="col-span-4 bg-red-200">
@@ -22,12 +21,24 @@
     </div>
     <hr class="col-span-4"> %>
     <%# Render offers for homepage %>
-
     <% @offers.each do |offer| %>
       <div class="p-6 w-full md:hover:bg-yellow-100 xl:hover:scale-110 md:hover:shadow-sm rounded-xl transition duration-600 flex flex-col content-center">
         <%= offerable_link(offer) %>
       </div>
     <% end %>
-
   </article>
 </section>
+
+
+<script>
+  // Menu items
+  const menuItems = ["Properties", "Vehicles", "Services"];
+
+  // Iterate through each menu item
+  menuItems.forEach(item => {
+    // When hovering over a menu item
+    $(`#${item} > button`).click(function() {
+      $(`#${item} > li`).slideToggle(300);
+    });
+  });
+</script>

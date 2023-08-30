@@ -16,7 +16,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", ">= 5.6.7"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
@@ -110,3 +110,9 @@ gem "geocoder"
 
 # Pundit
 gem "pundit"
+
+# Friendly ID
+gem 'friendly_id', '~> 5.4.0'
+
+# Inline SVG
+gem 'inline_svg'

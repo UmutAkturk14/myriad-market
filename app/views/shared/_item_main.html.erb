@@ -36,7 +36,6 @@
     </div>
 
     <%# TODO: Geolocation. Map goes here. %>
-    <p>Here is location</p>
     <div id="location" class="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 flex justify-center">
       <div class="shadow-xl overflow-hidden" style="width: 730px; height: 610px;"
         data-controller="map"
@@ -46,19 +45,19 @@
     </div>
   </main>
 
-  <%# TODO:  Profile %>
 
 
   <%= link_to "Back", "javascript:void(0);", id: "back-button" %>
 </div>
 
+<%# TODO:  Profile %>
 <div class="flex flex-col justify-center items-center h-[100vh]">
   <div class="relative flex flex-col items-center rounded-[20px] w-full sm:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto p-1 bg-white bg-clip-border shadow-xl  text-white">
       <div class="relative flex h-32 w-full p-4 justify-center rounded-xl bg-cover" >
           <img src='https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png' class="absolute flex h-32 w-full justify-center rounded-xl bg-cover">
           <% if item.user.profile_photo.key %>
-            <div class="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 !border-navy-700">
-              <%= cl_image_tag item.user.profile_photo.key, class: "h-full w-full rounded-full" %>
+            <div class="absolute -bottom-12 flex h-[120px] w-[120px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 !border-navy-700">
+              <%= cl_image_tag item.user.profile_photo.key, class: "h-full w-full object-cover rounded-full" %>
             </div>
           <% else %>
             <%= image_tag asset_path('user_icon'), class: "absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-gray-100 !border-navy-700" %>
@@ -68,22 +67,103 @@
           <h4 class="text-xl font-bold text-navy-700 text-black">
           <%= item.user.full_name %>
           </h4>
-          <p class="text-base font-normal text-gray-600"><%= item.user.country %></p>
+
+          <% if item.user.country.present? && item.user.city.present? %>
+            <p class="text-base font-normal text-gray-600"><%= item.user.city %> / <%= item.user.country %></p>
+          <% elsif item.user.country.present? %>
+            <p class="text-base font-normal text-gray-600"><%= item.user.country %></p>
+          <% elsif item.user.city.present? %>
+            <p class="text-base font-normal text-gray-600"><%= item.user.city %></p>
+          <% end %>
       </div>
       <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
           <div class="flex flex-col items-center justify-center">
           <%= link_to user_profile_path(user), class: "flex justify-center align-center" do %>
-            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Other offers</button>
+            <button type="button" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+            <svg class="w-5 h-5"
+              width="497.61572"
+              height="565.81604"
+              viewBox="0 0 497.61572 565.81604"
+              version="1.1"
+              id="svg1"
+              inkscape:version="1.3 (1:1.3+202307231459+0e150ed6c4)"
+              sodipodi:docname="user_icon_filled.svg"
+              xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+              xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:svg="http://www.w3.org/2000/svg">
+              <sodipodi:namedview
+                id="namedview1"
+                pagecolor="#ffffff"
+                bordercolor="#000000"
+                borderopacity="0.25"
+                inkscape:showpageshadow="2"
+                inkscape:pageopacity="0.0"
+                inkscape:pagecheckerboard="0"
+                inkscape:deskcolor="#d1d1d1"
+                inkscape:document-units="px"
+                inkscape:zoom="0.64895833"
+                inkscape:cx="257.33547"
+                inkscape:cy="346.70947"
+                inkscape:window-width="1920"
+                inkscape:window-height="996"
+                inkscape:window-x="0"
+                inkscape:window-y="0"
+                inkscape:window-maximized="1"
+                inkscape:current-layer="layer1" />
+              <defs
+                id="defs1">
+                <inkscape:path-effect
+                  effect="bspline"
+                  id="path-effect3"
+                  is_visible="true"
+                  lpeversion="1.3"
+                  weight="33.333333"
+                  steps="2"
+                  helper_size="0"
+                  apply_no_weight="true"
+                  apply_with_weight="true"
+                  only_selected="false"
+                  uniform="false" />
+              </defs>
+              <g
+                inkscape:label="Layer 1"
+                inkscape:groupmode="layer"
+                id="layer1"
+                transform="translate(-701.98409,-193.96666)">
+                <ellipse
+                  style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-dasharray:none;stroke-opacity:1"
+                  id="path1"
+                  cx="949.26239"
+                  cy="351.23676"
+                  rx="154.78883"
+                  ry="154.7701" />
+                <path
+                  id="path2"
+                  style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-dasharray:none;stroke-opacity:1"
+                  d="M 950.79192,511.00685 A 246.30726,246.27745 0 0 0 704.48411,757.28269 H 1197.0998 A 246.30726,246.27745 0 0 0 950.79192,511.00685 Z" />
+              </g>
+            </svg>
+            <span>Profile</span>
+            </button>
           <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
           <%= link_to "#", class: "flex justify-center align-center" do %>
-            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Message</button>
+            <button type="button" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"></path>
+                    </svg>
+              <span>Message</span>
+            </button>
           <% end %>
           </div>
           <div class="flex flex-col items-center justify-center">
           <%= link_to "#", class: "flex justify-center align-center" do %>
-            <button type="button" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center block">Buy/Loan</button>
+            <button type="button" class="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <%= inline_svg_tag("cash.svg", class: "h-5 w-5") %>
+              <span>Buy/Loan</span>
+            </button>
           <% end %>
           </div>
       </div>

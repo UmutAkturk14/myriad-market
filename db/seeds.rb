@@ -11,20 +11,28 @@ require "faker"
 # TODO: Seed users
 
 # puts "Seeding users"
-# 20.times do
+# 5.times do
 #   puts "User..."
 #   file = URI.open("https://source.unsplash.com/random?people-close-up")
 #   user = User.create(
 #     email: Faker::Internet.email,
 #     password: Faker::Internet.password,
 #     full_name: Faker::Name.name,
-#     username: Faker::Internet.username.gsub(/[^a-zA-Z0-9]/, '')
+#     username: Faker::Internet.username.gsub(/[^a-zA-Z0-9]/, ''),
+#     account_type: ["Personal", "Institutional"].sample,
+#     phone_number_visible: [true, false].sample,
+#     phone_number: Faker::PhoneNumber.cell_phone,
+#     address: Faker::Address.full_address,
+#     about: Faker::Lorem.sentences(number: 5).join(" "),
+#     city: Faker::Address.city,
+#     country: Faker::Address.country,
+#     address_visible: [true, false].sample
 #   )
 #   user.profile_photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 # end
 
 # # TODO: Seed properties
-# 20.times do
+# 5.times do
 #   puts "Property..."
 #   file = URI.open("https://source.unsplash.com/random?properties")
 #   property = Property.create(
@@ -45,7 +53,7 @@ require "faker"
 # end
 
 # # TODO: Seed vehicles
-# 20.times do
+# 5.times do
 #   puts "Vehicle..."
 #   file = URI.open("https://source.unsplash.com/random?old-cars")
 #   vehicle = Vehicle.create(
@@ -63,7 +71,7 @@ require "faker"
 #   vehicle.photos.attach(io: file, filename: "nes.png", content_type: "image/png")
 # end
 # # TODO: Seed services
-# 20.times do
+# 5.times do
 #   puts "Service..."
 #   file = URI.open("https://source.unsplash.com/random?services")
 #   service = Service.create(
@@ -79,18 +87,18 @@ require "faker"
 
 
 Vehicle.all.each do |v|
-  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample)
+  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample)
 end
 Property.all.each do |v|
-  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample)
+  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample)
 end
 Service.all.each do |v|
-  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample)
+  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample)
 end
 
 Offer.all.each do |o|
   o.title = Faker::Lorem.paragraph
-  o.address = ["Paris", "Landon", "Madrid", "Bordeaux"].sample
+  o.address = o.user.city
   o.save!
 end
 
