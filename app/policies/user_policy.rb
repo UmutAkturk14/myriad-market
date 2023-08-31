@@ -9,4 +9,13 @@ class UserPolicy < ApplicationPolicy
   def show?
     true
   end
+
+  def edit?
+    # NOTE: Only the user can edit their own profile
+    user == record
+  end
+
+  def update?
+    edit?
+  end
 end

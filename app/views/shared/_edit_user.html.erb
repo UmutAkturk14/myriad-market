@@ -1,29 +1,93 @@
-<div id="myModal" class="fixed inset-0 flex items-center justify-center hidden">
+<div id="myPersonalInfoModal" class="fixed inset-0 flex items-center justify-center mt-4 hidden">
   <div class="absolute inset-0 bg-gray-900 opacity-75"></div>
-  <div class="bg-white p-8 rounded-lg z-0 w-3/4">
+  <div class="bg-white p-8 rounded-lg z-0 w-full lg:w-2/3">
     <!-- Modal content goes here -->
-    <h2 class="text-xl font-semibold mb-4">Modal Title</h2>
-    <p>This is the modal content.</p>
-    <p>yo</p>
-    <p>yo</p>
-    <p>yo</p>
-    <p>yo</p>
-    <p>yo</p>
-    <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded">Close</button>
+    <div class="flex justify-center">
+      <h2 class="text-2xl font-semibold mt-4 mb-4 w-1/2 text-center border-t-[0.1rem] border-b-[0.1rem] border-neutral-950">Edit Personal Info</h2>
+    </div>
+
+    <div class="mt-6 w-full">
+      <%= simple_form_for @user, url: user_profile_path(@user), method: :patch do |f| %>
+        <%= f.error_notification %>
+
+        <div class="form-inputs  space-y-4 w-full flex flex-col justify-between items-center mx-12 md:mx-0">
+
+          <%= f.input :full_name,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500", placeholder: "John Doe" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"} %>
+
+          <%= f.input :phone_number,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500", placeholder: "000 000 00 00" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"} %>
+
+          <%= f.input :address,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"} %>
+
+          <%= f.input :city,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"} %>
+
+          <%= f.input :country,
+                      collection: CS.countries.values,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500", style: "width: 247.3px;" },
+                      prompt: "Select country",
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"}
+                      %>
+
+          <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500", placeholder: "johndoe@email.com" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"} %>
+
+          <%= f.input :phone_number_visible,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
+                      label: "Make my phone number public" %>
+
+          <%= f.input :address_visible,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
+                      label: "Make my address public" %>
+
+          <div class="form-actions mt-6 w-full flex justify-center">
+            <%= f.button :submit, "Update!", class: "block w-full md:w-1/4 text-white bg-blue-600 hover:bg-blue-700 text-gray-100 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4" %>
+          </div>
+        </div>
+      <% end %>
+      <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded">Close</button>
+    </div>
+
   </div>
 </div>
 
 <script>
 
 $(document).ready(function () {
-  $("#edit-button").on("click", () => {
-    $("#myModal").removeClass("hidden");
+  $("#edit-personal-info-button").on("click", () => {
+    $("#myPersonalInfoModal").removeClass("hidden");
   });
 
   // Close modal when the close button is clicked
   $("#closeModal").on("click", () => {
-    $("#myModal").addClass("hidden");
+    $("#myPersonalInfoModal").addClass("hidden");
   });
+
+  $(".form-check").addClass("flex items-center")
 });
 
 </script>
