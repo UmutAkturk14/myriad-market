@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resources :users, only: [:show], path: 'profiles', as: 'user_profiles'
+  resources :users, only: [:show, :edit, :update], path: 'profiles', as: 'user_profiles'
 
   resources :vehicles, only: [:show]
   resources :properties, only: [:show]
