@@ -10,12 +10,8 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
-  def edit?
+  def update?
     # NOTE: Only the user can edit their own profile
     user == record
-  end
-
-  def update?
-    edit?
   end
 end
