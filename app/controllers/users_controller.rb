@@ -6,10 +6,6 @@ class UsersController < ApplicationController
     @offers = Offer.where(user: @user)
   end
 
-  def edit
-    raise
-  end
-
   def update
     @user = User.friendly.find(params[:id])
     authorize @user
