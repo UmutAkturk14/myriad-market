@@ -9,4 +9,12 @@ class ServicePolicy < ApplicationPolicy
   def show?
     true
   end
+
+  def destroy?
+    record == record.user
+  end
+
+  def activate?
+    record == record.user
+  end
 end

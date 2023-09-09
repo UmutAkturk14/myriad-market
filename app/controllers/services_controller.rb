@@ -9,4 +9,12 @@ class ServicesController < ApplicationController
 
     @markers =  [ lat: @offer.latitude, lng: @offer.longitude ]
   end
+
+  def destroy
+    raise
+  end
+
+  def activate
+    raise
+  end
 end

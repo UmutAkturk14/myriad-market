@@ -230,26 +230,56 @@
 
             <% if @user == current_user %>
               <div class="flex-1 overflow-scroll bg-white rounded-lg shadow-xl mt-4 p-8">
-                <h4 class="text-xl text-gray-900 font-bold">Activity log</h4>
-                <div class="relative px-4">
-                    <div class="absolute h-full border border-dashed border-opacity-20 border-secondary"></div>
+                <h4 class="text-xl text-gray-900 font-bold">Your Postings</h4>
+                <% @user.services.each do |s| %>
+                  <div class="flex justify-between items-center hover:shadow hover:drop-shadow-md p-1 px-3 rounded-xl post">
+                    <div class="relative">
+                          <!-- start::Timeline item -->
+                          <div class="flex items-center w-full my-2 -ml-1.5">
+                              <%= cl_image_tag s.photos.first.key, class: "w-16 h-16 object-cover rounded-md mr-4" %>
+                              <div class="">
+                                  <p class="text-sm">
+                                      Message received from <a href="#" class="text-blue-600 font-bold">Jane Stillman</a>.</p>
+                                  <p class="text-xs text-gray-500">2 hours ago</p>
+                              </div>
+                          </div>
+                          <!-- end::Timeline item -->
 
-                    <% @user.services.each do |s| %>
-                      <!-- start::Timeline item -->
-                      <div class="flex items-center w-full my-6 -ml-1.5">
-                          <div class="w-1/12 z-10">
-                              <%= cl_image_tag s.photos.first.key, class: "w-16 h-16 object-cover rounded-md" %>
-                          </div>
-                          <div class="w-11/12">
-                              <p class="text-sm">
-                                  Message received from <a href="#" class="text-blue-600 font-bold">Jane Stillman</a>.</p>
-                              <p class="text-xs text-gray-500">2 hours ago</p>
-                          </div>
-                      </div>
-                      <!-- end::Timeline item -->
+                    </div>
+                    <div class="buttons lg:hidden items-center flex flex-col">
+
+                    <%# Deactivate button %>
+                    <% if Offer.find_by(offerable: s).present? %>
+                      <%= form_tag activate_service_path(s) do %>
+                        <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1">
+                          <div class="absolute inset-0 w-3 bg-yellow-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                          <span class="relative text-black group-hover:text-white ml-3">Deactivate</span>
+                        </button>
+                      <% end %>
+
+                    <% else %>
+                      <%# Activate button %>
+                      <%= form_tag activate_service_path(s), class: "activate" do %>
+                        <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1">
+                          <div class="absolute inset-0 w-3 bg-green-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                          <span class="relative text-black group-hover:text-white ml-3">Activate</span>
+                        </button>
+                      <% end %>
+
                     <% end %>
 
-                </div>
+                      <%# Remove button %>
+                      <%= link_to service_path(s), data: {turbo_method: :delete} do  %>
+                        <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1">
+                          <div class="absolute inset-0 w-3 bg-red-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                          <span class="relative text-black group-hover:text-white ml-3">Remove</span>
+                        </button>
+
+                      <% end %>
+
+                    </div>
+                  </div>
+              <% end %>
             </div>
           <% end %>
         </div>
@@ -269,7 +299,7 @@
           </div>
           <div class="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8" id="offers">
             <div class="flex justify-between">
-              <h4 class="text-xl text-gray-900 font-bold">Offers (<%= @offers.count %>)</h4>
+              <h4 class="text-xl text-gray-900 font-bold">Active Offers (<%= @offers.count %>)</h4>
               <% if @user == current_user %>
                 <%= button_tag(type: "submit", class: "flex justify-end p-2.5 bg-green-500 rounded-xl hover:rounded-3xl hover:bg-green-600 transition-all duration-300 text-white", id: "edit-offers-button") do %>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -314,5 +344,13 @@ $(".edit-btn").click(function (e) {
   $(form).slideToggle();
 });
 
+$(".post").hover(function (e) {
+    // over
+    $(this.children[1]).fadeIn(150);
+  }, function () {
+    // out
+    $(this.children[1]).fadeOut(150);
 
+  }
+);
 </script>
