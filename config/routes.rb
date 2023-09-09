@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'offers/destroy'
   get 'users/show'
   get 'profiles/show'
   devise_for :users
@@ -13,7 +14,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :update], path: 'profiles', as: 'user_profiles'
 
-  resources :vehicles, only: [:show]
-  resources :properties, only: [:show]
-  resources :services, only: [:show]
+  resources :vehicles, only: [:show, :update]
+  resources :properties, only: [:show, :update]
+  resources :services, only: [:show, :update]
+  resources :offers, only: [:destroy, :update]
 end
