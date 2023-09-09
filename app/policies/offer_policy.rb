@@ -9,4 +9,8 @@ class OfferPolicy < ApplicationPolicy
   def destroy?
     record.user == user
   end
+
+  def update?
+    record.user == user
+  end
 end

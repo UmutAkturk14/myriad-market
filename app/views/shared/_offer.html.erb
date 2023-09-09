@@ -2,16 +2,46 @@
   <%= cl_image_tag offer.offerable.photos.first.key, class: "object-cover w-full xl:w-96 h-96 md:h-80 lg:h-60 rounded-lg" %>
 
   <% if current_user == offer.offerable.user %>
-    <%= link_to offer_path(offer), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this post?" }, class: "flex justify-end p-2.5 bg-red-500 rounded-xl absolute top-12 right-0 hover:rounded-3xl hover:bg-red-600 transition-all duration-300 text-white opacity-90 hidden", id: "delete-offer-button" do %>
+    <%= link_to offer_path(offer), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this post?" }, class: "flex justify-end p-2.5 bg-red-500 rounded-xl absolute top-12 right-0 hover:rounded-3xl hover:bg-red-600 transition-all duration-300 text-white opacity-90 offer-btn hidden", id: "delete-offer-#{offer.id}" do %>
       <svg style="color: white" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" fill="white"></path> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" fill="white"></path> </svg>
     <% end %>
 
-    <%= button_tag(type: "submit", class: "flex justify-end p-2.5 bg-green-500 rounded-xl absolute top-0 right-0 hover:rounded-3xl hover:bg-green-600 transition-all duration-300 text-white opacity-90 hidden", id: "edit-offer-button") do %>
+    <%= button_tag(type: "submit", class: "flex edit-btn justify-end p-2.5 bg-green-500 rounded-xl absolute top-0 right-0 hover:rounded-3xl hover:bg-green-600 transition-all duration-300 text-white opacity-90 offer-btn hidden", id: "edit-offer-#{offer.id}") do %>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
       </svg>
     <% end %>
+    <%# TODO: Here goes the form for the speciic offer/edit %>
+    <%= simple_form_for offer, url: offer_path(offer), method: :patch do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs  space-y-4 w-full flex flex-col justify-center items-center mx-12 md:mx-0 ">
+
+        <%= f.input :title,
+                    required: true,
+                    autofocus: true,
+                    input_html: { autocomplete: "email", class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mt-4", placeholder: "John Doe" },
+                    wrapper_html: { class: "flex flex-col w-full md:w-2/3"} %>
+        <% if offer.offerable_type != "Service" %>
+          <%= f.input :up_for,
+                      collection: ["Loan", "Sale"],
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mt-4", placeholder: "John Doe" },
+                      wrapper_html: { class: "flex flex-col w-full md:w-2/3"} %>
+        <% end %>
+
+        <div class="form-actions mt-6 w-full flex justify-center">
+          <%= f.button :submit, "Update!", class: "block w-full md:w-1/4 text-white bg-blue-600 hover:bg-blue-700 text-gray-100 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4" %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
+  <p><%= offer.title %></p>
 </div>
 
-<p><%= offer.title %></p>
+<script>
+
+$("form").hide()
+
+</script>

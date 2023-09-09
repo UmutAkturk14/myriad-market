@@ -267,7 +267,7 @@
             </div>
             <p class="mt-2 text-gray-700"><%= @user.about %></p>
           </div>
-          <div class="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
+          <div class="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8" id="offers">
             <div class="flex justify-between">
               <h4 class="text-xl text-gray-900 font-bold">Offers (<%= @offers.count %>)</h4>
               <% if @user == current_user %>
@@ -305,8 +305,14 @@
 <script>
 
 $("#edit-offers-button").click(function() {
-  $("#edit-offer-button").toggleClass("hidden");
-  $("#delete-offer-button").toggleClass("hidden");
+  $(".offer-btn").toggleClass("hidden");
 })
+
+$(".edit-btn").click(function (e) {
+  e.preventDefault();
+  const form = $(`#${this.id.replace(/-/g, "_")}`);
+  $(form).slideToggle();
+});
+
 
 </script>
