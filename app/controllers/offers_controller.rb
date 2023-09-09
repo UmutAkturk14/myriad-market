@@ -22,6 +22,6 @@ class OffersController < ApplicationController
   private
   # TODO: Need to finish this
   def offer_params
-    params.require(:offer).permit(:email)
+    params.require(:offer).permit(:up_for, :title, :address)
   end
 end

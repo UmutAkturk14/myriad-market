@@ -18,18 +18,20 @@
       <div class="form-inputs  space-y-4 w-full flex flex-col justify-center items-center mx-12 md:mx-0 ">
 
         <%= f.input :title,
-                    required: true,
                     autofocus: true,
                     input_html: { autocomplete: "email", class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mt-4", placeholder: "John Doe" },
                     wrapper_html: { class: "flex flex-col w-full md:w-2/3"} %>
         <% if offer.offerable_type != "Service" %>
           <%= f.input :up_for,
                       collection: ["Loan", "Sale"],
-                      required: true,
                       autofocus: true,
                       input_html: { autocomplete: "email", class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mt-4", placeholder: "John Doe" },
                       wrapper_html: { class: "flex flex-col w-full md:w-2/3"} %>
         <% end %>
+        <%= f.input :address,
+                    autofocus: true,
+                    input_html: { autocomplete: "email", class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mt-4", placeholder: "John Doe" },
+                    wrapper_html: { class: "flex flex-col w-full md:w-2/3"} %>
 
         <div class="form-actions mt-6 w-full flex justify-center">
           <%= f.button :submit, "Update!", class: "block w-full md:w-1/4 text-white bg-blue-600 hover:bg-blue-700 text-gray-100 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4" %>
