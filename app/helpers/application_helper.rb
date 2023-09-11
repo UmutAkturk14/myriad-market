@@ -21,4 +21,23 @@ module ApplicationHelper
       end
     end
   end
+
+  def time_ago(timestamp)
+    time_difference = (Time.current - timestamp).to_i
+
+    if time_difference <= 0
+      "just now"
+    elsif time_difference < 60
+      "#{time_difference} second#{'s' if time_difference > 1} ago"
+    elsif time_difference < 3600
+      minutes = time_difference / 60
+      "#{minutes} minute#{'s' if minutes > 1} ago"
+    elsif time_difference < 86400
+      hours = time_difference / 3600
+      "#{hours} hour#{'s' if hours > 1} ago"
+    else
+      days = time_difference / 86400
+      "#{days} day#{'s' if days > 1} ago"
+    end
+  end
 end

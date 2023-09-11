@@ -30,7 +30,7 @@
 
       <div class="flex justify-between">
         <p class="text-blue-700"><strong>Address</strong></p>
-        <p class="text-red-500"><strong><%= item.user.address %> / <%= item.user.country %></strong></p>
+        <p class="text-red-500"><strong><%= Offer.find_by(offerable: item).address %></strong></p>
       </div>
 
     </div>

@@ -88,13 +88,13 @@ end
 
 
 Vehicle.all.each do |v|
-  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample)
+  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample, visible: true)
 end
 Property.all.each do |v|
-  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample)
+  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample, visible: true)
 end
 Service.all.each do |v|
-  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample)
+  Offer.create!(offerable: v, up_for: ["Sale", "Loan"].sample, user: User.all.sample, is_available: [true, false].sample, visible: true)
 end
 
 Offer.all.each do |o|

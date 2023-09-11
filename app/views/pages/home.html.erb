@@ -21,14 +21,14 @@
     </div>
     <hr class="col-span-4"> %>
     <%# Render offers for homepage %>
-    <% @offers.each do |offer| %>
+    <% @offers.where(visible: true).each do |offer| %>
       <div class="p-6 w-full md:hover:bg-yellow-100 xl:hover:scale-110 md:hover:shadow-sm rounded-xl transition duration-600 flex flex-col content-center">
         <%= offerable_link(offer) %>
       </div>
     <% end %>
   </article>
 </section>
-<% console %>
+
 
 <script>
   // Menu items

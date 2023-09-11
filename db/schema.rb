@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_31_120949) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_155040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_120949) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "feeds", force: :cascade do |t|
+    t.string "content"
+    t.bigint "user_id", null: false
+    t.bigint "offer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_feeds_on_offer_id"
+    t.index ["user_id"], name: "index_feeds_on_user_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -65,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_120949) do
     t.float "longitude"
     t.string "address"
     t.bigint "user_id", null: false
+    t.boolean "visible"
     t.index ["offerable_type", "offerable_id"], name: "index_offers_on_offerable"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end
@@ -114,11 +125,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_120949) do
     t.string "country"
     t.string "city"
     t.text "about"
-    t.boolean "phone_number_visible", default: false
-    t.string "account_type", default: "Personal"
+    t.boolean "phone_number_visible"
+    t.string "account_type"
     t.boolean "address_visible", default: false
     t.string "slug"
     t.string "status"
+    t.boolean "email_visible"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
@@ -142,6 +154,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_120949) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "feeds", "offers"
+  add_foreign_key "feeds", "users"
   add_foreign_key "offers", "users"
   add_foreign_key "properties", "users"
   add_foreign_key "services", "users"
