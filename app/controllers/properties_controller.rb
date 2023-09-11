@@ -38,7 +38,7 @@ class PropertiesController < ApplicationController
       offer.visible = true
     end
     if offer.save
-      Feed.create!(user: @posting.user, content: "updated a posting status.", offer: offer)
+      Feed.create!(user: @posting.user, content: "Updated the status of posting ##{@posting.class.to_s[0].upcase}#{@posting.id.to_s.rjust(4, "0")}.", offer: offer)
 
       flash[:notice] = "Your posting status has been updated"
       redirect_back(fallback_location: home_path)
