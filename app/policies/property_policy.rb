@@ -11,10 +11,10 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record == record.user
+    user == record.user
   end
 
   def activate?
-    record == record.user
+    user == record.user
   end
 end
