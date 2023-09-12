@@ -47,23 +47,27 @@
                       input_html: { autocomplete: "email", class: "px-4 py-2 border rounded focus:outline-none focus:border-blue-500", placeholder: "johndoe@email.com" },
                       wrapper_html: { class: "flex justify-between w-full md:w-2/3"} %>
 
-          <%= f.input :phone_number_visible,
-                      autofocus: true,
-                      input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
-                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
-                      label: "Make my phone number public" %>
+          <% unless @user.account_type == "Institutional" %>
+            <%= f.input :phone_number_visible,
+                        autofocus: true,
+                        input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                        wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
+                        label: "Make my phone number public" %>
 
-          <%= f.input :email_visible,
-                      autofocus: true,
-                      input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
-                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
-                      label: "Make my email public" %>
+            <%= f.input :email_visible,
+                        autofocus: true,
+                        input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                        wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
+                        label: "Make my email public" %>
 
-          <%= f.input :address_visible,
-                      autofocus: true,
-                      input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
-                      wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
-                      label: "Make my address public" %>
+            <%= f.input :address_visible,
+                        autofocus: true,
+                        input_html: { autocomplete: "email", class: "mr-2 px-4 py-2 border rounded focus:outline-none focus:border-blue-500" },
+                        wrapper_html: { class: "flex justify-between w-full md:w-2/3"},
+                        label: "Make my address public" %>
+          <% end %>
+
+
 
           <div class="form-actions mt-6 w-full flex justify-center">
             <%= f.button :submit, "Update!", class: "block w-full md:w-1/4 text-white bg-blue-600 hover:bg-blue-700 text-gray-100 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4" %>

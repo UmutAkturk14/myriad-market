@@ -27,6 +27,14 @@
                   prompt: "Select country",
                   wrapper_html: { class: "flex justify-between w-full md:w-1/2"}
                    %>
+
+      <%= f.input :account_type,
+                  collection: ["Instutional", "Personal"],
+                  as: :radio_buttons,
+                  autofocus: true,
+                  input_html: { class: "mr-2 rounded" },
+                  wrapper_html: { class: "block w-full md:w-1/2"}
+                   %>
       <%= f.input :email,
                   required: true,
                   autofocus: true,
@@ -50,3 +58,11 @@
       <%= render "devise/shared/links" %>
     </div>
   </div>
+
+<script>
+$(document).ready(function () {
+
+  $(".form-check").addClass("flex items-center");
+});
+
+</script>
