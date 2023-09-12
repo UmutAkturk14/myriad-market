@@ -44,13 +44,8 @@
   </div>
 </main>
 
-<div class="flex justify-end w-full md:w-3/4 lg:w-1/2 xl:w-2/5 m-auto">
-  <%= link_to "Back", "javascript:void(0);", id: "back-button", class: "text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden sm:block" %>
-</div>
-
-
 <%# TODO:  Profile %>
-<div class="flex flex-col justify-center items-center h-[100vh]">
+<div class="flex flex-col justify-center items-center h-[50vh]">
   <div class="relative flex flex-col items-center rounded-[20px] w-full sm:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto p-1 bg-white bg-clip-border shadow-xl  text-white">
       <div class="relative flex h-32 w-full p-4 justify-center rounded-xl bg-cover" >
           <img src='https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/banner.ef572d78f29b0fee0a09.png' class="absolute flex h-32 w-full justify-center rounded-xl bg-cover">
@@ -169,7 +164,39 @@
   </div>
 </div>
 
+<div class="flex justify-end w-full md:w-3/4 lg:w-1/2 xl:w-2/5 m-auto p-1">
+  <%= link_to "javascript:void(0);", id: "back", class: "text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 mr-5  lg:mr-0 text-center hidden sm:block" do %>
+    <span class="flex items-center">
 
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6 fill-current text-white mr-1 -ml-3">
+
+			<defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs>
+
+			<title>arrow-ios-back</title>
+
+			<g id="Layer_2" data-name="Layer 2">
+
+				<g id="arrow-ios-back">
+
+					<g id="arrow-ios-back-2" data-name="arrow-ios-back">
+
+						<rect class="cls-1" transform="translate(24 0) rotate(90)"/>
+
+						<path class="cls-2" d="M13.83,19a1,1,0,0,1-.78-.37l-4.83-6a1,1,0,0,1,0-1.27l5-6a1,1,0,0,1,1.54,1.28L10.29,12l4.32,5.36A1,1,0,0,1,13.83,19Z"/>
+
+					</g>
+
+				</g>
+
+			</g>
+
+		</svg>
+
+	<span>Back</span>
+
+	</span>
+  <% end %>
+</div>
 <script>
 
 $(document).ready(function () {
@@ -191,6 +218,14 @@ $(document).ready(function () {
   });
 
   locationContent.addClass("hidden p-1 md:p-2 lg:p-4 xl:p-6");
+
+  $("#back").click(function() {
+
+	console.log(document.referrer);
+
+	window.history.back();
+
+	});
 });
 
 
