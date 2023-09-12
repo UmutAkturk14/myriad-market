@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :landing]
+  skip_before_action :authenticate_user!, only: [:home, :landing, :vehicles, :properties, :services]
 
   def home
     @offers = Offer.all
