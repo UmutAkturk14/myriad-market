@@ -6,7 +6,7 @@ class OffersController < ApplicationController
   end
 
   def create
-
+    # TODO:
   end
 
   def destroy
@@ -27,6 +27,11 @@ class OffersController < ApplicationController
       flash[:notice] = "Your offer has been updated"
       redirect_to user_profile_path(current_user)
     end
+  end
+
+  def fetch_form
+    authorize :offer
+    render partial: "shared/new_offer_form", layout: false
   end
 
   private

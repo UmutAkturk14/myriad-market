@@ -21,4 +21,8 @@ class OfferPolicy < ApplicationPolicy
   def create?
     user.present?
   end
+
+  def fetch_form?
+    user.present?
+  end
 end

@@ -3,15 +3,41 @@
     <%= f.input :offerable_type, collection: ["Property", "Service", "Vehicle"], prompt: "Pick an offer type", label_html: { class: "mr-4" } %>
     <%= f.button :submit, class: "text-white bg-orange-700 hover:bg-orange-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium w-full" %>
   <% end %>
+
+  <div class="" id="targetElement"></div>
 </main>
 
 <script>
-  const selectButton = $("#offer_offerable_type")
-  const selectOptions = $("#offer_offerable_type option")
+  $(document).ready(function () {
+    let selectButton = $("#offer_offerable_type");
 
-  selectButton.addClass("rounded-xl");
-  selectOptions.click(function() {
-    console.log(selectButton.val());
-  })
+    selectButton.addClass("rounded-xl");
 
+    selectButton.change(function() {
+      // Get the selected option's value
+      const selectedOptionValue = $(this).val();
+
+      // Make an AJAX GET request to fetch the content
+      $.ajax({
+        type: "GET",
+        url: '<%= fetch_form_path %>', // Replace with the appropriate route to your controller action
+        dataType: "html", // Set the data type to "html" to handle HTML responses
+        success: function(response) {
+          // Assuming you want to insert the content into a specific element on your page,
+          // replace "targetElement" with the selector for that element.
+          // $("#targetElement").html($(response));
+          const parsedResponse = $(response);
+          $("#targetElement").empty();
+          console.log($("#targetElement"));
+
+          const relevantDiv = parsedResponse.filter(`.${selectedOptionValue}`)[0];
+          console.log(relevantDiv);
+          $("#targetElement").append(relevantDiv);
+        },
+        error: function(error) {
+          console.error("Error:", error);
+        }
+      });
+    });
+  });
 </script>

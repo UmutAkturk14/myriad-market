@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'vehicles', to: 'pages#vehicles', as: 'vehicles'
   get 'properties', to: 'pages#properties', as: 'properties'
   get 'services', to: 'pages#services', as: 'services'
+  get "fetch_form", to: 'offers#fetch_form', as: :fetch_form
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
