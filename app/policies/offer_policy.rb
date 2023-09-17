@@ -13,4 +13,12 @@ class OfferPolicy < ApplicationPolicy
   def update?
     record.user == user
   end
+
+  def new?
+    user.present?
+  end
+
+  def create?
+    user.present?
+  end
 end

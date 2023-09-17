@@ -1,0 +1,17 @@
+<main class="mt-3 flex justify-center m-auto w-full md:w-11/12 xl:w-10/12">
+  <%= simple_form_for @offer do |f| %>
+    <%= f.input :offerable_type, collection: ["Property", "Service", "Vehicle"], prompt: "Pick an offer type", label_html: { class: "mr-4" } %>
+    <%= f.button :submit, class: "text-white bg-orange-700 hover:bg-orange-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium w-full" %>
+  <% end %>
+</main>
+
+<script>
+  const selectButton = $("#offer_offerable_type")
+  const selectOptions = $("#offer_offerable_type option")
+
+  selectButton.addClass("rounded-xl");
+  selectOptions.click(function() {
+    console.log(selectButton.val());
+  })
+
+</script>

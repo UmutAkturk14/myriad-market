@@ -25,5 +25,5 @@ Rails.application.routes.draw do
   resources :vehicles, only: [:show, :update, :destroy]
   resources :properties, only: [:show, :update, :destroy]
   resources :services, only: [:show, :update, :destroy]
-  resources :offers, only: [:destroy, :update]
+  resources :offers, only: [:destroy, :update, :new, :create]
 end

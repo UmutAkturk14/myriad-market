@@ -187,15 +187,15 @@
                     "Service": :service_path,
                     "Property": :property_path} %>
 
-                  <div class="flex justify-between items-center hover:shadow hover:drop-shadow-md p-1 px-3 rounded-xl post <%= Offer.find_by(offerable: s).visible == true ? "" : "bg-blue-200" %>">
+                  <div class="flex justify-between items-center hover:shadow hover:drop-shadow-md p-1 px-3 rounded-xl post <%= Offer.find_by(offerable: s).visible == true ? "" : "bg-blue-200" %>" id="<%= s.class.to_s.downcase %>-<%= s.id%>">
                     <%= link_to send(paths[s.class.to_s.to_sym], s) do  %>
                       <div class="flex items-center w-full my-2 -ml-1.5">
                         <%= cl_image_tag s.photos.first.key, class: "w-16 h-16 object-cover rounded-md mr-4" %>
-                        <div>
+                        <div class="offer-text">
                           <% if Offer.find_by(offerable: s).visible == true %>
-                            <p class="text-green-700 font-bold text-xs -mt-3">Active</p>
+                            <p class="text-green-700 font-bold text-xs -mt-3 active-passive">Active</p>
                           <% else %>
-                            <p class="text-red-700 font-bold text-xs -mt-3">Passive</p>
+                            <p class="text-red-700 font-bold text-xs -mt-3 active-passive">Passive</p>
                           <% end %>
 
                           <p class="text-sm text-blue-600 font-bold grow line-clamp-1">
@@ -213,17 +213,14 @@
                         <% button_text = Offer.find_by(offerable: s).visible ? 'Deactivate' : 'Activate' %>
 
                         <%= form_tag offer_path, method: :post do %>
-                          <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1">
+                          <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1 activate-button" offer-path="<%= offer_path%>">
 
                             <% if button_text == 'Deactivate' %>
                               <div class="absolute inset-0 w-3 bg-green-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
 
                             <% else %>
                               <div class="absolute inset-0 w-3 bg-yellow-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-
                             <% end %>
-
-
                             <span class="relative text-black group-hover:text-white ml-3"><%= button_text %></span>
                           </button>
                         <% end %>
@@ -279,7 +276,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
               <% @offers.each do |offer| %>
-                <div class="p-6 w-full xl:hover:shadow-xl xl:hover:shadow-blue-100 rounded-xl transition duration-600 flex flex-col content-center">
+                <div class="p-6 w-full xl:hover:shadow-xl xl:hover:shadow-blue-100 rounded-xl transition duration-600 flex flex-col content-center offer-card <%= offer.offerable_type.to_s.downcase %>-<%= offer.offerable.id %> <%= offer.visible ? "" : "hidden" %>">
                   <%= offerable_link(offer) %>
                 </div>
               <% end %>
@@ -298,26 +295,99 @@
   <%= render "shared/edit_photo" %>
 </div>
 
-
 <script>
 
-$("#edit-offers-button").click(function() {
-  $(".offer-btn").toggleClass("hidden");
-})
+$(document).ready(function () {
+  const lgBreakpoint = 1024; // Default "lg" breakpoint in Tailwind CSS
 
-$(".edit-btn").click(function (e) {
-  e.preventDefault();
-  const form = $(`#${this.id.replace(/-/g, "_")}`);
-  $(form).slideToggle();
+  // Toggle edit mode for offers
+  $("#edit-offers-button").click(function () {
+    $(".offer-btn").toggleClass("hidden");
+  });
+
+  // Toggle edit form for posts
+  $(".edit-btn").click(function (e) {
+    e.preventDefault();
+    const formId = this.id.replace(/-/g, "_");
+    $(`#${formId}`).slideToggle();
+  });
+
+  // Handle hover effect for posts
+
+  // Function to apply hover effect
+  function applyHoverEffect() {
+    $(".post").hover(
+      function () {
+        // Mouse over
+        $(this).children(":eq(1)").fadeIn(150);
+      },
+      function () {
+        // Mouse out
+        $(this).children(":eq(1)").fadeOut(150);
+      }
+    );
+  }
+
+  // Check screen size and apply hover effect only if screen width is larger than "lg" breakpoint
+  if ($(window).width() >= lgBreakpoint) {
+    applyHoverEffect();
+  }
+
+  // Listen for window resize and reapply the hover effect as needed
+  $(window).resize(function () {
+    if ($(window).width() >= lgBreakpoint) {
+      applyHoverEffect();
+    } else {
+      // Remove the hover effect if the screen size is smaller than "lg" breakpoint
+      $(".post").off("mouseenter mouseleave");
+    }
+  });
+
+  // Handle click event for activate buttons
+  $(".activate-button").click(handleActivateButtonClick);
 });
 
-$(".post").hover(function (e) {
-    // over
-    $(this.children[1]).fadeIn(150);
-  }, function () {
-    // out
-    $(this.children[1]).fadeOut(150);
+function handleActivateButtonClick(e) {
+  e.preventDefault();
+  const $button = $(this);
+  const $form = $button.closest("form");
+  const $postDiv = $button.closest(".post");
+  const buttonText = $button.find("span").text();
+  const $activePassiveButton = $postDiv.find(".active-passive");
+  const cardID = $postDiv.attr("id")
+  console.log(cardID);
 
-  }
-);
+  $.ajax({
+    url: $form.attr("action"),
+    type: "POST",
+    headers: {
+      "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
+    },
+    success: function (response) {
+      // Handle the response and update styling if necessary
+      console.log("Offer status changed:", response);
+
+      // Toggle button text and styles
+      const newButtonText = buttonText === "Deactivate" ? "Activate" : "Deactivate";
+      $button.find("span").text(newButtonText);
+      $activePassiveButton.text(buttonText === "Deactivate" ? "Passive" : "Active");
+
+      // Toggle button and active/passive button colors
+      $button.children(":eq(0)").toggleClass("bg-green-400 bg-yellow-400");
+      $activePassiveButton.toggleClass("text-green-700 text-red-700");
+
+      // Toggle card background
+      $postDiv.toggleClass("bg-blue-200");
+
+      // Toggle active offer card
+      $(`.${cardID}`).slideToggle(1000);
+
+    },
+    error: function (error) {
+      console.error("Error:", error);
+    },
+  });
+}
+
+
 </script>
