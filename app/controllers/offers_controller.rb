@@ -1,4 +1,14 @@
 class OffersController < ApplicationController
+  def new
+    @offer = Offer.new
+    @offer.user = current_user
+    authorize @offer
+  end
+
+  def create
+
+  end
+
   def destroy
     @offer = Offer.find(params[:id])
     authorize @offer

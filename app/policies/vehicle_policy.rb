@@ -7,7 +7,7 @@ class VehiclePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    Offer.find_by(offerable: record).visible || Offer.find_by(offerable: record).user == user
   end
 
   def destroy?

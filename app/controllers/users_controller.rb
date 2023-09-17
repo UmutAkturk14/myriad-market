@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       @ownership = Vehicle.where(user: current_user) + Property.where(user: current_user) + Service.where(user: current_user)
     end
 
-    @offers = Offer.where(user: @user, visible: true)
+    @offers = @user == current_user ? Offer.where(user: @user) : Offer.where(user: @user, visible: true)
   end
 
   def update

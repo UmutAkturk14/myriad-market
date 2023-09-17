@@ -40,7 +40,16 @@
     <% end %>
   <% end %>
   <p class="text-center mt-2"><%= offer.title %></p>
-  <p class="text-center text-sm text-gray-500"><%= offer.address %></p>
+
+  <% if offer.offerable_type == "Service" %>
+    <p class="text-center text-sm text-gray-500"><%= offer.offerable.location %></p>
+    <p class="text-center text-sm text-gray-500">Service / <%= offer.offerable.hourly_rate %>$ Per Hour</p>
+  <% else %>
+    <p class="text-center text-sm text-gray-500"><%= offer.address %></p>
+    <p class="text-center text-sm text-gray-500"><%= offer.up_for %> / <%= number_with_delimiter(offer.offerable.price, delimiter: ',') %>$</p>
+
+  <% end %>
+
 </div>
 
 <script>
