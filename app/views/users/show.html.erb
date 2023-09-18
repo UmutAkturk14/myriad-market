@@ -187,62 +187,92 @@
                     "Service": :service_path,
                     "Property": :property_path} %>
 
-                  <div class="flex justify-between items-center hover:shadow hover:drop-shadow-md p-1 px-3 rounded-xl post <%= Offer.find_by(offerable: s).visible == true ? "" : "bg-blue-200" %>" id="<%= s.class.to_s.downcase %>-<%= s.id%>">
-                    <%= link_to send(paths[s.class.to_s.to_sym], s) do  %>
-                      <div class="flex items-center w-full my-2 -ml-1.5">
-                        <%= cl_image_tag s.photos.first.key, class: "w-16 h-16 object-cover rounded-md mr-4" %>
-                        <div class="offer-text">
-                          <% if Offer.find_by(offerable: s).visible == true %>
-                            <p class="text-green-700 font-bold text-xs -mt-3 active-passive">Active</p>
-                          <% else %>
-                            <p class="text-red-700 font-bold text-xs -mt-3 active-passive">Passive</p>
+
+                  <% if Offer.find_by(offerable: s).present? %>
+                    <div class="flex justify-between items-center hover:shadow hover:drop-shadow-md p-1 px-3 rounded-xl post <%= Offer.find_by(offerable: s).visible == true ? "" : "bg-blue-200" %>" id="<%= s.class.to_s.downcase %>-<%= s.id%>">
+                      <%= link_to send(paths[s.class.to_s.to_sym], s) do  %>
+                        <div class="flex items-center w-full my-2 -ml-1.5">
+                          <%= cl_image_tag s.photos.first.key, class: "w-16 h-16 object-cover rounded-md mr-4" %>
+                          <div class="offer-text">
+                            <% if Offer.find_by(offerable: s).visible == true %>
+                              <p class="text-green-700 font-bold text-xs -mt-3 active-passive">Active</p>
+                            <% else %>
+                              <p class="text-red-700 font-bold text-xs -mt-3 active-passive">Passive</p>
+                            <% end %>
+
+                            <p class="text-sm text-blue-600 font-bold grow line-clamp-1">
+                              <%= Offer.find_by(offerable: s).title %></p>
+                            <p class="text-xs text-gray-500"><%= time_ago(s.created_at) %></p>
+                          </div>
+                        </div>
+
+                      <% end %>
+                      <div class="buttons lg:hidden items-center flex flex-col">
+
+                        <% if Offer.find_by(offerable: s).present? %>
+                          <% offerable_type = s.class.to_s.downcase %>
+                          <% offer_path = send("activate_#{offerable_type}_path", s) %>
+                          <% button_text = Offer.find_by(offerable: s).visible ? 'Deactivate' : 'Activate' %>
+
+                          <%= form_tag offer_path, method: :post do %>
+                            <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1 activate-button" offer-path="<%= offer_path%>">
+
+                              <% if button_text == 'Deactivate' %>
+                                <div class="absolute inset-0 w-3 bg-green-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+
+                              <% else %>
+                                <div class="absolute inset-0 w-3 bg-yellow-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                              <% end %>
+                              <span class="relative text-black group-hover:text-white ml-3"><%= button_text %></span>
+                            </button>
+                          <% end %>
+                        <% end %>
+                        <%# Remove button %>
+                        <% link_path = case s.class.name
+                            when "Service" then service_path(s)
+                            when "Vehicle" then vehicle_path(s)
+                            when "Property" then property_path(s)
+                            else "#" # Handle other cases if needed
+                            end %>
+
+                          <%= link_to link_path, data: { turbo_method: :delete } do %>
+                            <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1">
+                              <div class="absolute inset-0 w-3 bg-red-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                              <span class="relative text-black group-hover:text-white ml-3">Remove</span>
+                            </button>
                           <% end %>
 
+
+                      </div>
+                    </div>
+
+                  <% else %>
+                    <%# TODO: Postings that haven't been yet turned into offers %>
+                    <div class="flex justify-between items-center hover:shadow hover:drop-shadow-md p-1 px-3 rounded-xl post bg-red-100" id="<%= s.class.to_s.downcase %>-<%= s.id%>">
+                      <div class="flex items-center w-full my-2 -ml-1.5">
+                        <% if s.photos.first.key.present? %>
+                          <%= cl_image_tag s.photos.first.key, class: "w-16 h-16 object-cover rounded-md mr-4" %>
+                        <% end %>
+                        <div class="offer-text">
+                          <p class="text-orange-700 font-bold text-xs -mt-3 active-passive">Not yet activated</p>
+
                           <p class="text-sm text-blue-600 font-bold grow line-clamp-1">
-                            <%= Offer.find_by(offerable: s).title %></p>
-                          <p class="text-xs text-gray-500">2 hours ago</p>
+                            <%= s.class.to_s == "Service" ? s.service_type : s.description %></p>
+                          <p class="text-xs text-gray-500"><%= time_ago(s.created_at) %></p>
                         </div>
                       </div>
+                      <div class="buttons lg:hidden items-center flex flex-col">
 
-                    <% end %>
-                    <div class="buttons lg:hidden items-center flex flex-col">
+                         <button class="group relative h-8 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1 activate-button <%= s.class.to_s.downcase %>-<%= s.id %>">
+                          <div class="absolute inset-0 w-3 bg-orange-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                          <span class="relative text-black group-hover:text-white ml-3">Display as an offer</span>
+                         </button>
 
-                      <% if Offer.find_by(offerable: s).present? %>
-                        <% offerable_type = s.class.to_s.downcase %>
-                        <% offer_path = send("activate_#{offerable_type}_path", s) %>
-                        <% button_text = Offer.find_by(offerable: s).visible ? 'Deactivate' : 'Activate' %>
-
-                        <%= form_tag offer_path, method: :post do %>
-                          <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1 activate-button" offer-path="<%= offer_path%>">
-
-                            <% if button_text == 'Deactivate' %>
-                              <div class="absolute inset-0 w-3 bg-green-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-
-                            <% else %>
-                              <div class="absolute inset-0 w-3 bg-yellow-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-                            <% end %>
-                            <span class="relative text-black group-hover:text-white ml-3"><%= button_text %></span>
-                          </button>
-                        <% end %>
-                      <% end %>
-                      <%# Remove button %>
-                      <% link_path = case s.class.name
-                          when "Service" then service_path(s)
-                          when "Vehicle" then vehicle_path(s)
-                          when "Property" then property_path(s)
-                          else "#" # Handle other cases if needed
-                          end %>
-
-                        <%= link_to link_path, data: { turbo_method: :delete } do %>
-                          <button class="group relative h-6 w-20 overflow-hidden rounded-lg bg-white text-xs shadow mb-1">
-                            <div class="absolute inset-0 w-3 bg-red-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-                            <span class="relative text-black group-hover:text-white ml-3">Remove</span>
-                          </button>
-                        <% end %>
-
-
+                      </div>
                     </div>
-                  </div>
+                  <% end %>
+
+
               <% end %>
 
             </div>

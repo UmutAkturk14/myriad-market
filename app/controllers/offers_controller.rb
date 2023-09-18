@@ -7,6 +7,7 @@ class OffersController < ApplicationController
 
   def create
     # TODO:
+    raise
   end
 
   def destroy
@@ -30,6 +31,7 @@ class OffersController < ApplicationController
   end
 
   def fetch_form
+    @offer = Offer.new(user: current_user)
     authorize :offer
     render partial: "shared/new_offer_form", layout: false
   end

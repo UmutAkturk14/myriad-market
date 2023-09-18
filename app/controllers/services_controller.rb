@@ -10,6 +10,24 @@ class ServicesController < ApplicationController
     @markers =  [ lat: @offer.latitude, lng: @offer.longitude ]
   end
 
+  def create
+    s = Service.new(service_params)
+    s.user = current_user
+    authorize s
+    if s.save!
+      flash[:notice] = "You have successfully created a service"
+      offer = Offer.new
+      offer.user = current_user
+      offer.offerable = s
+      offer.up_for = "Not specified"
+      offer.address = current_user.address || nil
+      offer.title = s.description
+      offer.visible = false
+      offer.save!
+      redirect_to user_profile_path(current_user)
+    end
+  end
+
   def destroy
     @posting = Service.find(params[:id])
     authorize @posting
@@ -41,5 +59,11 @@ class ServicesController < ApplicationController
       flash[:notice] = "Your posting status has been updated"
       redirect_back(fallback_location: home_path)
     end
+  end
+
+  private
+
+  def service_params
+    params.require(:service).permit(:service_type, :title, :hourly_rate, :location, :description, photos: [])
   end
 end

@@ -47,4 +47,5 @@ class Service < ApplicationRecord
 
   validates :service_type, :title, :hourly_rate, :location, :description, :user, presence: true
 
+
 end

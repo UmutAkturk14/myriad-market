@@ -24,8 +24,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :update], path: 'profiles', as: 'user_profiles'
 
-  resources :vehicles, only: [:show, :update, :destroy]
-  resources :properties, only: [:show, :update, :destroy]
-  resources :services, only: [:show, :update, :destroy]
+  resources :vehicles, only: [:show, :update, :destroy, :create]
+  resources :properties, only: [:show, :update, :destroy, :create]
+  resources :services, only: [:show, :update, :destroy, :create]
   resources :offers, only: [:destroy, :update, :new, :create]
 end

@@ -40,4 +40,17 @@ module ApplicationHelper
       "#{days} day#{'s' if days > 1} ago"
     end
   end
+
+  # In your view or helper file
+  def label_for_offerable(offerable)
+    if offerable.is_a?(Vehicle)
+      offerable.description
+    elsif offerable.is_a?(Property)
+      offerable.description # Adjust as needed
+    elsif offerable.is_a?(Service)
+      offerable.service_type # Adjust as needed
+    else
+      "Unknown Offerable"
+    end
+  end
 end
