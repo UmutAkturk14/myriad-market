@@ -115,9 +115,9 @@
 
             <ul class="mt-2 text-gray-700">
                 <% attributes_array = ["full_name", "account_type", "phone_number", "address", "city", "country", "email", "created_at", "updated_at"] %>
-                <% attributes_array.delete("address") unless @user.account_type == "Personal" && @user.address_visible %>
-                <% attributes_array.delete("email") unless @user.account_type == "Personal" && @user.email_visible %>
-                <% attributes_array.delete("phone_number") unless @user.account_type == "Personal" && @user.phone_number_visible %>
+                <% attributes_array.delete("address") if @user.account_type == "Personal" && !(@user.address_visible) %>
+                <% attributes_array.delete("email") if @user.account_type == "Personal" && !(@user.email_visible) %>
+                <% attributes_array.delete("phone_number") if @user.account_type == "Personal" && !(@user.phone_number_visible) %>
                 <% attributes_array.each do |attribute| %>
 
                   <% unless @user.attributes[attribute].blank? %>
@@ -324,7 +324,6 @@
   <%= render "shared/edit_about" %>
   <%= render "shared/edit_photo" %>
 </div>
-
 <script>
 
 $(document).ready(function () {
