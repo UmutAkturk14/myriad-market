@@ -17,7 +17,9 @@
   </head>
 
   <body>
-    <%= render "shared/navbar" %>
+    <% unless request.original_url == landing_url %>
+      <%= render "shared/navbar" %>
+    <% end %>
     <%= render "shared/flashes" %>
 
     <%= yield %>
