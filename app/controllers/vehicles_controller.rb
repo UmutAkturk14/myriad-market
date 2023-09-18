@@ -10,6 +10,24 @@ class VehiclesController < ApplicationController
     @markers =  [ lat: offer.latitude, lng: offer.longitude ]
   end
 
+  def create
+    v = Vehicle.new(vehicle_params)
+    v.user = current_user
+    authorize v
+    if v.save!
+      flash[:notice] = "You have successfully created the vehicle"
+      offer = Offer.new
+      offer.user = current_user
+      offer.offerable = v
+      offer.up_for = "Not specified"
+      offer.address = current_user.address || nil
+      offer.title = v.description
+      offer.visible = false
+      offer.save!
+      redirect_to user_profile_path(current_user)
+    end
+  end
+
   def destroy
     @posting = Vehicle.find(params[:id])
     authorize @posting
@@ -23,7 +41,7 @@ class VehiclesController < ApplicationController
 
     if @posting.destroy
       flash[:notice] = "Posting has been successfully deleted."
-      redirect_back(fallback_location: home_path)
+      redirect_to user_profile_path(current_user)
     end
   end
 
@@ -42,5 +60,11 @@ class VehiclesController < ApplicationController
       flash[:notice] = "Your posting status has been updated"
       redirect_back(fallback_location: home_path)
     end
+  end
+
+  private
+
+  def vehicle_params
+    params.require(:vehicle).permit(:vehicle_type, :make, :model, :year, :mileage, :price, :fuel_type, :transmission, :description, photos: [])
   end
 end

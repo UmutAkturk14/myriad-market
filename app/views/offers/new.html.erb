@@ -1,43 +1,118 @@
-<main class="mt-3 flex justify-center m-auto w-full md:w-11/12 xl:w-10/12">
-  <%= simple_form_for @offer do |f| %>
-    <%= f.input :offerable_type, collection: ["Property", "Service", "Vehicle"], prompt: "Pick an offer type", label_html: { class: "mr-4" } %>
-    <%= f.button :submit, class: "text-white bg-orange-700 hover:bg-orange-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium w-full" %>
-  <% end %>
+<main class="mt-3 flex flex-col justify-center m-auto w-full xl:w-1/3 px-4">
 
-  <div class="" id="targetElement"></div>
+  <%# TODO: Add a select button and options. Depending on the options pull the relevant form %>
+
+  <section class="mb-3 select optional offer_offerable_type"><label class="form-label select optional mr-4 mb-4">Offerable type</label>
+    <select class="form-select select optional rounded-xl" name="offer[offerable_type]" id="offer_offerable_type">
+      <option value="">Pick an offer type</option>
+      <option value="Property">Property</option>
+      <option value="Service">Service</option>
+      <option value="Vehicle">Vehicle</option>
+    </select>
+  </section>
+  <hr>
+  <section class="mt-4" id="forms">
+    <article id="form-vehicle">
+      <% vehicle = Vehicle.new(user: current_user) %>
+
+      <%= simple_form_for vehicle do |f| %>
+        <%= f.input :vehicle_type, collection: Vehicle::VEHICLE_TYPES.sort %>
+        <%= f.input :make, collection: Vehicle::VEHICLE_MAKE.sort %>
+        <%= f.input :model %>
+        <%= f.input :year, collection: (1900..2023).to_a.reverse %>
+        <%= f.input :mileage %>
+        <%= f.input :price %>
+        <%= f.input :fuel_type, collection: ["Gasoline",
+            "Diesel",
+            "Electric",
+            "Hybrid (Gasoline/Electric)", "Other"].sort %>
+        <%= f.input :transmission, collection: [
+            "Automatic",
+            "Manual",
+            "Semi-Automatic",
+            "Continuously Variable (CVT)",
+            "Dual-Clutch Automatic",
+            "Automated Manual",
+            "Tiptronic",
+            "Direct-Shift Gearbox (DSG)",
+            "Electronic Continuously Variable Transmission (e-CVT)",
+            "Hybrid Dual-Clutch Transmission (HDCT)",
+            "Other"
+          ].sort
+          %>
+        <%= f.input :description, as: :text %>
+        <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+
+        <div class="flex justify-end submit-button">
+          <%= f.button :submit, "Create!", class: "block w-full md:w-1/4 text-white bg-orange-600 hover:bg-orange-500 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4"  %>
+        </div>
+      <% end %>
+    </article>
+    <article id="form-property">
+      <% property = Property.new(user: current_user) %>
+
+      <%= simple_form_for property do |f| %>
+        <%= f.input :property_type, collection: Property::ARCHITECTURAL_PROPERTIES.sort %>
+        <%= f.input :bedrooms, collection: (1..10).to_a %>
+        <%= f.input :bathrooms, collection: (1..5).to_a %>
+        <%= f.input :square_feet %>
+        <%= f.input :age %>
+        <%= f.input :price %>
+        <%= f.input :floor %>
+        <%= f.input :address %>
+        <%= f.input :city %>
+        <%= f.input :state %>
+        <%= f.input :description, as: :text %>
+        <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+
+        <div class="flex justify-end submit-button">
+          <%= f.button :submit, "Create!", class: "block w-full md:w-1/4 text-white bg-orange-600 hover:bg-orange-500 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4"  %>
+        </div>
+      <% end %>
+
+    </article>
+    <article id="form-service">
+      <% service = Service.new(user: current_user) %>
+
+      <%= simple_form_for service do |f| %>
+        <%= f.input :service_type, collection: Service::SERVICES.sort %>
+        <%= f.input :title %>
+        <%= f.input :hourly_rate %>
+        <%= f.input :location %>
+        <%= f.input :description, as: :text %>
+        <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+
+        <div class="flex justify-end submit-button">
+          <%= f.button :submit, "Create!", class: "block w-full md:w-1/4 text-white bg-orange-600 hover:bg-orange-500 shadow-lg font-medium rounded-lg text-md py-2.5 text-center mt-4"  %>
+        </div>
+      <% end %>
+
+    </article>
+  </section>
 </main>
 
 <script>
   $(document).ready(function () {
+    $("#forms article").hide();
     let selectButton = $("#offer_offerable_type");
 
-    selectButton.addClass("rounded-xl");
+    // selectButton.addClass("rounded-xl");
+    $("select").addClass("rounded-md");
+    $("textarea").addClass("rounded-md");
+    $("input").addClass("rounded-md");
+    $("#vehicle_photos").removeClass("rounded-md");
+    $("#property_photos").removeClass("rounded-md");
+    $("#service_photos").removeClass("rounded-md");
+    $("form div").addClass("flex justify-between");
+    $(".submit-button").removeClass("justify-between");
+
 
     selectButton.change(function() {
       // Get the selected option's value
+      $("#forms article").hide();
       const selectedOptionValue = $(this).val();
-
-      // Make an AJAX GET request to fetch the content
-      $.ajax({
-        type: "GET",
-        url: '<%= fetch_form_path %>', // Replace with the appropriate route to your controller action
-        dataType: "html", // Set the data type to "html" to handle HTML responses
-        success: function(response) {
-          // Assuming you want to insert the content into a specific element on your page,
-          // replace "targetElement" with the selector for that element.
-          // $("#targetElement").html($(response));
-          const parsedResponse = $(response);
-          $("#targetElement").empty();
-          console.log($("#targetElement"));
-
-          const relevantDiv = parsedResponse.filter(`.${selectedOptionValue}`)[0];
-          console.log(relevantDiv);
-          $("#targetElement").append(relevantDiv);
-        },
-        error: function(error) {
-          console.error("Error:", error);
-        }
-      });
+      console.log($(`#form-${selectedOptionValue.toLowerCase()}`));
+      $(`#form-${selectedOptionValue.toLowerCase()}`).show();
     });
   });
 </script>
