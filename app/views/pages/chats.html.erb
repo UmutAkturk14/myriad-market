@@ -4,3 +4,8 @@
   <%= button_to "Say hello", hello_path, class: "text-lg border border-3 rounded-lg p-2 hover:bg-gray-100  transition duration-300"  %>
 
 </div>
+
+
+<% current_user.chats.each do |c| %>
+  <p><%= c %></p>
+<% end %>

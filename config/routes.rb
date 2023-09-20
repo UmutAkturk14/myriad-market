@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'messages/create'
+  get 'chat/show'
   get 'offers/destroy'
   get 'users/show'
   get 'profiles/show'
@@ -9,7 +11,7 @@ Rails.application.routes.draw do
   get 'vehicles', to: 'pages#vehicles', as: 'vehicles'
   get 'properties', to: 'pages#properties', as: 'properties'
   get 'services', to: 'pages#services', as: 'services'
-  get 'chats', to: 'pages#chats', as: 'chats'
+  post 'chats/:id', to: 'chats#unsubscribe', as: 'unsubscribe_chat'
   get "fetch_form", to: 'offers#fetch_form', as: :fetch_form
 
 
@@ -30,4 +32,6 @@ Rails.application.routes.draw do
   resources :properties, only: [:show, :update, :destroy, :create]
   resources :services, only: [:show, :update, :destroy, :create]
   resources :offers, only: [:destroy, :update, :new, :create]
+  resources :chats, only: [:show, :index]
+  resources :messages, only: [:create]
 end

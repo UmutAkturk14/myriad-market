@@ -1,0 +1,20 @@
+<% recipients_except_current_user = @chat.recipients.reject { |user| user == current_user } %>
+<% recipient_names = recipients_except_current_user.map { |user| user.full_name } %>
+
+<% @chat.recipients.each do |recipient| %>
+  <%= tag.h3(recipient.full_name) unless recipient == current_user %>
+<% end %>
+
+<%= simple_form_for [@message],
+  html: {class: "d-flex"} do |f|
+%>
+  <%= f.input :content,
+    label: false,
+    placeholder: recipient_names,
+    wrapper_html: {class: "flex-grow-1"}
+  %>
+  <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+<% end %>
+
+<%= button_to "Delete chat", unsubscribe_chat_path(@chat) %>
+<% console %>
