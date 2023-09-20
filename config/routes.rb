@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'vehicles', to: 'pages#vehicles', as: 'vehicles'
   get 'properties', to: 'pages#properties', as: 'properties'
   get 'services', to: 'pages#services', as: 'services'
+  get 'chats', to: 'pages#chats', as: 'chats'
   get "fetch_form", to: 'offers#fetch_form', as: :fetch_form
 
 
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   post "vehicles/:id/activate", to: "vehicles#activate", as: "activate_vehicle"
   post "services/:id/activate", to: "services#activate", as: "activate_service"
   post "properties/:id/activate", to: "properties#activate", as: "activate_property"
+  post "/hello", to: "pages#hello", as: :hello
 
   # Defines the root path route ("/")
   # root "articles#index"
