@@ -5,8 +5,10 @@ class MessagesController < ApplicationController
     chat = Chat.find(message_params[:chat_id])
     authorize @message
     if @message.save
-      flash[:notice] = "Your message has been sent"
+      ChatChannel.broadcast_to(chat, "New message")
       redirect_to chat_path(chat)
+    else
+      render "chats/show", status: :unprocessable_entity
     end
   end
 
