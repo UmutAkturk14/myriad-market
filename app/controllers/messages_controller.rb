@@ -5,7 +5,11 @@ class MessagesController < ApplicationController
     chat = Chat.find(message_params[:chat_id])
     authorize @message
     if @message.save
-      ChatChannel.broadcast_to(chat, "New message")
+      response_html = render_to_string(
+        partial: "messages/message",
+        locals: { message: @message }
+      )
+      ChatChannel.broadcast_to(chat, message: response_html, sender_id: @message.user.id)
       redirect_to chat_path(chat)
     else
       render "chats/show", status: :unprocessable_entity

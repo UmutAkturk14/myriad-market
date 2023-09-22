@@ -5,16 +5,18 @@
     <div class="relative flex items-center space-x-4">
         <!-- Online Status Indicator (You can replace this with your own indicator) -->
         <div class="relative">
+
+          <!-- User Avatar -->
+          <% other_user = @chat.recipients.reject { |user| user == current_user }.first %>
+          <% if other_user.profile_photo.present? %>
           <%# TODO: Here's online button. Can display or not when the user is online or not. %>
           <span class="absolute text-green-500 right-0 bottom-0">
               <svg width="20" height="20">
                 <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
               </svg>
           </span>
-
-          <!-- User Avatar -->
-          <% other_user = @chat.recipients.reject { |user| user == current_user }.first %>
-          <%= cl_image_tag other_user.profile_photo.key, class: "w-10 sm:w-16 h-10 sm:h-16 rounded-full" %>
+            <%= cl_image_tag other_user.profile_photo.key, class: "w-10 sm:w-16 h-10 sm:h-16 rounded-full" %>
+          <% end %>
         </div>
 
         <!-- User Information -->
@@ -62,43 +64,15 @@
 
 
   <!-- Messages Section -->
-  <div id="messages"  data-chat-subscription-target="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch" data-chat-subscription-chat-id-value="<%= @chat.id %>">
+  <div id="messages"  data-chat-subscription-target="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch" data-chat-subscription-chat-id-value="<%= @chat.id %>" user="<%= current_user.id %>">
     <% @chat.messages.each do |message| %>
-        <% if message.user == current_user %>
-          <!-- Message from current user -->
-          <div class="chat-message flex items-end justify-end">
-              <!-- Message Content -->
-              <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-                <div>
-                    <span class="px-2 py-1 text-lg rounded-lg inline-block rounded-br-none bg-orange-500 text-white">
-                      <%= message.content %>
-                    </span>
-                </div>
-              </div>
-              <!-- User Avatar -->
-              <%= cl_image_tag message.user.profile_photo.key, class: "w-10 h-10 rounded-full order-2" %>
-          </div>
-        <% else %>
-          <!-- Message from other user -->
-          <div class="chat-message flex items-end">
-              <!-- User Avatar -->
-              <%= cl_image_tag message.user.profile_photo.key, class: "w-10 h-10 rounded-full order-1" %>
-              <!-- Message Content -->
-              <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                <div>
-                    <span class="px-2 py-1 text-lg rounded-lg inline-block rounded-bl-none bg-gray-700 text-gray-200">
-                      <%= message.content %>
-                    </span>
-                </div>
-              </div>
-          </div>
-        <% end %>
+      <%= render "messages/message", message: message %>
     <% end %>
 
   </div>
 
   <!-- Message Input Section -->
-  <div class="border-t-2 border-gray-200 px-4 pt-4 mb-16 ">
+  <div class="border-t-2 border-gray-200 px-4 pt-4 mb-16">
     <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
           <button type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
@@ -136,7 +110,7 @@
   </div>
 </div>
 <%# TODO:  %>
-<%= simple_form_for @message, html: { class: "hidden" } do |f| %>
+<%= simple_form_for @message, html: { class: "hidden", photo: "#{current_user.profile_photo.present? ? current_user.profile_photo.key : '' }" } do |f| %>
   <%= f.hidden_field :chat_id, value: @chat.id %>
   <%= f.input :content, as: :string, input_html: { id: "messageInput" } %>
   <%= f.hidden_field :content, id: "hiddenContentField" %>
@@ -144,27 +118,57 @@
 <% end %>
 
 <script>
-  $(document).ready(function() {
-    // Scroll to the bottom of the messages div
-    $("#messages").scrollTop($("#messages")[0].scrollHeight);
-    // When the button is clicked, submit the form
-    $("#sendMessageButton").click(function() {
-      event.preventDefault(); // Prevent the default form submission
-      sendMessage();
-    });
+  $(document).ready(function () {
+  scrollToBottom(); // Scroll to the bottom of the messages div
 
-    $("#messageInput").keypress(function(event) {
-        if (event.which === 13) {
-            event.preventDefault(); // Prevent the default form submission
-            sendMessage();
-        }
-    });
-
-    function sendMessage() {
-        let content = $("#messageInput").val();
-        $("#hiddenContentField").val(content); // Update the hidden field
-        $("form").submit();
-    }
-
+  $("#sendMessageButton").click(function (event) {
+    event.preventDefault();
+    sendMessage();
   });
+
+  $("#messageInput").keypress(function (event) {
+    if (event.which === 13) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+
+  function scrollToBottom() {
+    let messagesContainer = $("#messages");
+    messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+  }
+
+  function sendMessage() {
+    let content = $("#messageInput").val();
+    $("#hiddenContentField").val(content);
+
+    const chatID = parseInt($("#messages").attr("data-chat-subscription-chat-id-value"));
+
+    let messageData = {
+      message: {
+        chat_id: chatID,
+        content: content,
+      },
+    };
+
+    $.ajax({
+      url: `${$("form").attr("action")}`,
+      type: "POST",
+      data: messageData,
+      headers: {
+        "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
+      },
+
+      success: function (response) {
+        $("#messageInput").val("");
+        scrollToBottom();
+      },
+
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
+  }
+});
+
 </script>

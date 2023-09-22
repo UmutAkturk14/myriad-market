@@ -17,12 +17,12 @@
   </head>
 
   <body class="<%= 'overflow-y-hidden' if request.path.match?(/^\/chats\/\d+/) %>">
-  <% unless request.original_url == landing_url %>
-    <%= render "shared/navbar" %>
-  <% end %>
-  <%= render "shared/flashes" %>
+    <% unless request.original_url == landing_url %>
+      <%= render "shared/navbar" %>
+    <% end %>
+    <%= render "shared/flashes" %>
 
-  <%= yield %>
-</body>
+    <%= yield %>
+  </body>
 
 </html>

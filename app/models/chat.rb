@@ -12,10 +12,11 @@ class Chat < ApplicationRecord
       user2 = recipients[1]
 
       # Check if a chat already exists between user1 and user2
-      if Chat.joins(:recipients).where(users: { id: [user1.id, user2.id] }).exists? ||
-         Chat.joins(:recipients).where(users: { id: [user2.id, user1.id] }).exists?
+      if Chat.joins(:recipients).where(users: { id: user1.id }).exists? &&
+         Chat.joins(:recipients).where(users: { id: user2.id }).exists?
         errors.add(:base, 'Chat between these users already exists')
       end
     end
   end
+
 end

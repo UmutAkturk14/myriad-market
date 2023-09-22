@@ -43,7 +43,7 @@ end
     square_feet: (60..200).to_a.sample,
     age: (1..20).to_a.sample,
     floor: (1..4).to_a.sample,
-    price: (100000..1000000).to_a.sample,
+    price: (0..500).to_a.sample*1000,
     address: Faker::Address.full_address,
     city: Faker::Address.city,
     state: Faker::Address.country,
