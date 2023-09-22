@@ -22,4 +22,12 @@ class PagesController < ApplicationController
       redirect_to home_path
     end
   end
+
+  def chats
+
+  end
+
+  def hello
+
+  end
 end

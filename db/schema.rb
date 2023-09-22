@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_155040) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_20_130730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_155040) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "recipients", default: [], array: true
+  end
+
+  create_table "chats_users", id: false, force: :cascade do |t|
+    t.bigint "chat_id"
+    t.bigint "user_id"
+    t.index ["chat_id", "user_id"], name: "index_chats_users_on_chat_id_and_user_id", unique: true
+    t.index ["chat_id"], name: "index_chats_users_on_chat_id"
+    t.index ["user_id", "chat_id"], name: "index_chats_users_on_user_id_and_chat_id", unique: true
+    t.index ["user_id"], name: "index_chats_users_on_user_id"
+  end
+
   create_table "feeds", force: :cascade do |t|
     t.string "content"
     t.bigint "user_id", null: false
@@ -61,6 +76,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_155040) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.bigint "user_id", null: false
+    t.integer "chat_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "offers", force: :cascade do |t|
@@ -156,6 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_155040) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "feeds", "offers"
   add_foreign_key "feeds", "users"
+  add_foreign_key "messages", "users"
   add_foreign_key "offers", "users"
   add_foreign_key "properties", "users"
   add_foreign_key "services", "users"

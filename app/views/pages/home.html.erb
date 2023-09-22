@@ -2,9 +2,9 @@
   <aside class="w-full p-2 text-center hidden xl:inline">
     <%# Categories hash %>
     <% categories = {
-        "Properties" => Property::ARCHITECTURAL_PROPERTIES,
-        "Vehicles" => Vehicle::VEHICLE_TYPES,
-        "Services" => Service::SERVICES
+        "Properties" => Property::ARCHITECTURAL_PROPERTIES.sort,
+        "Vehicles" => Vehicle::VEHICLE_TYPES.sort,
+        "Services" => Service::SERVICES.sort
       } %>
 
     <%# Render categories, category_list(title, items, ul_class, li_class, button_class) %>

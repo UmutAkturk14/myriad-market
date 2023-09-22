@@ -1,0 +1,34 @@
+<% if message.user == current_user %>
+  <!-- Message from current user -->
+  <div class="chat-message flex items-end justify-end message-card">
+    <!-- Message Content -->
+    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+      <div>
+        <span class="px-2 py-1 text-lg rounded-lg inline-block rounded-br-none bg-orange-500 text-white">
+          <%= message.content %>
+        </span>
+      </div>
+    </div>
+    <!-- User Avatar -->
+    <% if message.user.profile_photo.present? %>
+
+      <%= cl_image_tag message.user.profile_photo.key, class: "w-10 h-10 rounded-full order-2" %>
+    <% end %>
+  </div>
+<% else %>
+  <!-- Message from other user -->
+  <div class="chat-message flex items-end message-card">
+    <!-- User Avatar -->
+    <% if message.user.profile_photo.present? %>
+      <%= cl_image_tag message.user.profile_photo.key, class: "w-10 h-10 rounded-full order-1" %>
+    <% end %>
+    <!-- Message Content -->
+    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+      <div>
+        <span class="px-2 py-1 text-lg rounded-lg inline-block rounded-bl-none bg-gray-700 text-gray-200" message-from="<%= message.user.id %>">
+          <%= message.content %>
+        </span>
+      </div>
+    </div>
+  </div>
+<% end %>

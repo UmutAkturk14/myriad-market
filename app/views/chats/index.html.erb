@@ -1,0 +1,33 @@
+<p>yo</p>
+<div class="w-full flex justify-center m-auto">
+
+  <%= button_to "Say hello", hello_path, class: "text-lg border border-3 rounded-lg p-2 hover:bg-gray-100  transition duration-300"  %>
+
+</div>
+
+
+<% @chats.each do |c| %>
+  <%= link_to chat_path(c) do %>
+    <% recipients_except_current_user = c.recipients.reject { |user| user == current_user } %>
+    <% recipient_names = recipients_except_current_user.map { |user| user.full_name } %>
+    <% chat_title = "" %>
+
+    <% if recipient_names.length == 1 %>
+      <% chat_title << recipient_names.first %>
+    <% else %>
+      <% recipient_names.each_with_index do |name, index| %>
+        <% chat_title << name %>
+        <% chat_title << (index == recipient_names.length - 2 ? ', and ' : (index == recipient_names.length - 1 ? '' : ', ')) %>
+      <% end %>
+    <% end %>
+
+    <%= tag.h2(chat_title) %>
+
+
+  <% end %>
+<% end %>
+
+
+
+
+<% console %>

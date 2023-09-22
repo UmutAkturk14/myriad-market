@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :services, dependent: :destroy
   has_many :vehicles, dependent: :destroy
   has_many :offers
+  has_and_belongs_to_many :chats, join_table: 'chats_users'
 
   has_one_attached :profile_photo
   # ! This screws things up in the tests, can't figure out why
