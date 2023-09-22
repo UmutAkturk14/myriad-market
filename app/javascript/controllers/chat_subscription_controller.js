@@ -1,37 +1,40 @@
-import { Controller } from "@hotwired/stimulus"
-import { createConsumer } from "@rails/actioncable"
-import $ from "jquery"; // Import jQuery
+import { Controller } from "@hotwired/stimulus";
+import { createConsumer } from "@rails/actioncable";
+import $ from "jquery";
 
 export default class extends Controller {
-  static targets = ["messages"]
-  static values = { chatId: Number }
+  // Define targets and values as static properties
+  static targets = ["messages"];
+  static values = { chatId: Number };
 
   connect() {
+    // Get the messages container and chat ID
     const $messagesElement = $("#messages");
     const chatId = $messagesElement.data("chat-subscription-chat-id-value");
-    console.log(`Chat ID: ${chatId}`);
 
-    console.log(this.messagesTarget);
-
+    // Create a subscription to the ChatChannel
     const subscription = createConsumer().subscriptions.create(
-      { channel: "ChatChannel", id: chatId},
+      { channel: "ChatChannel", id: chatId },
       {
         received: (data) => {
-          // Check if it's the sender
-          const notSender = parseInt($("#messages").attr("user")) != data.sender_id;
+          // Check if the message sender is not the current user
+          const notSender = parseInt($messagesElement.attr("user")) !== data.sender_id;
 
-          // Find the span to manipulate the span if necessary
-          let messageElement = $(data.message)
-          let messageCard = messageElement.find(".message-card");
-          console.log(messageCard);
-          console.log(messageElement);
+          // Get the message element
+          const messageElement = $(data.message);
 
           if (notSender) {
-            // Add the necessary class
-            messageElement.addClass("flex-row-reverse justify-start")
-            messageElement.find("span").removeClass("rounded-br-none bg-orange-500 text-white").addClass("rounded-bl-none bg-gray-700 text-gray-200");
+            // Add classes for proper message styling
+            messageElement.addClass("flex-row-reverse justify-start");
+            messageElement.find("span")
+              .removeClass("rounded-br-none bg-orange-500 text-white")
+              .addClass("rounded-bl-none bg-gray-700 text-gray-200");
           }
+
+          // Append the message element to the messages container
           $messagesElement.append(messageElement);
+
+          // Scroll to the bottom of the messages container
           $messagesElement.scrollTop($messagesElement[0].scrollHeight);
         },
       }
@@ -40,53 +43,4 @@ export default class extends Controller {
     // Store the subscription for later use or cleanup if needed
     this.subscription = subscription;
   }
-
 }
-
-
-// import { Controller } from "@hotwired/stimulus"
-// import { createConsumer } from "@rails/actioncable"
-// import $ from "jquery"; // Import jQuery
-
-// export default class extends Controller {
-//   static targets = ["messages"]
-//   static values = { chatId: Number }
-
-//   connect() {
-//     const $messagesElement = $("#messages");
-//     const chatId = $messagesElement.data("chat-subscription-chat-id-value");
-//     console.log(`Chat ID: ${chatId}`);
-
-//     console.log(this.messagesTarget);
-
-//     const subscription = createConsumer().subscriptions.create(
-//       { channel: "ChatChannel", id: chatId},
-//       {
-//         received: (data) => {
-//           // Check if it's the sender
-//           const notSender = parseInt($("#messages").attr("user")) != data.sender_id;
-
-//           // Find the span to manipulate the span if necessary
-//           let messageElement = $(data.message)
-//           let spanElement = $(messageElement).find("span")
-//           let messageCard = $(messageElement).find(".message-card")
-//           console.log(messageCard);
-//           console.log(messageElement);
-
-//           if (notSender) {
-//             // Add the necessary class
-//             $(spanElement).removeClass("rounded-br-none bg-orange-500 text-white").addClass("rounded-bl-none bg-gray-700 text-gray-200");
-//             $(messageCard).removeClass("justify-end")
-//           }
-//           console.log(spanElement);
-//           $messagesElement.append(messageElement);
-//           $messagesElement.scrollTop($messagesElement[0].scrollHeight);
-//         },
-//       }
-//     );
-
-//     // Store the subscription for later use or cleanup if needed
-//     this.subscription = subscription;
-//   }
-
-// }
