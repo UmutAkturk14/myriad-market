@@ -23,11 +23,12 @@ class PagesController < ApplicationController
     end
   end
 
-  def chats
-
-  end
-
-  def hello
-
+  def search
+    @properties = Property.all
+    @vehicles = Vehicle.all
+    @service = Service.all
+    if params[:query].present?
+      @results = PgSearch.multisearch(params[:query])
+    end
   end
 end

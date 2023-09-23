@@ -1,0 +1,42 @@
+<script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<div class="hidden lg:block">
+  <div class="flex w-[15rem] bg-gray-800 rounded-full border focus:outline-none border-white mr-4" x-data="{ search: '' }">
+    <input type="search" id="navbar-input-box" class="w-full focus:ring-0 border-none bg-transparent px-4 py-1 default:outline-none text-white focus:outline-none" placeholder="Search 🔍" x-model="search" />
+    <button id="svg">
+      <svg style="color: white" class="h-8 w-8 mr-4 p-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="116" cy="116" r="84" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></circle><line x1="175.4" y1="175.4" x2="224" y2="224" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></line></svg>
+    </button>
+  </div>
+</div>
+
+
+<%= simple_form_for :search, url: search_path, method: :get, html: { class: "hidden", id: "search-form" } do |f| %>
+  <%= f.input :query, input_html: { class: "form-control", id: "search-input", placeholder: "Type a keyword" } %>
+  <%= f.button :submit, "Search", id: "search-submit", style: "border-radius: 8px;" %>
+<% end %>
+
+
+<script>
+  $(document).ready(function () {
+    $("#svg").click(function() {
+      const searchForm = $("#search-form");
+      const searchWord = $("#navbar-input-box").val();
+      const formSearchInput = $("#search-input");
+      formSearchInput.val(searchWord);
+      searchForm.submit();
+    })
+  });
+
+
+</script>
+
+
+
+<!--
+<div class="hidden lg:block">
+  <div class="flex w-[15rem] bg-gray-800 rounded-full border focus:outline-none border-white mr-4" x-data="{ search: '' }">
+    <input type="search" class="w-full focus:ring-0 border-none bg-transparent px-4 py-1 default:outline-none text-white focus:outline-none" placeholder="Search 🔍" x-model="search" />
+    <svg style="color: white" class="h-8 w-8 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="116" cy="116" r="84" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></circle><line x1="175.4" y1="175.4" x2="224" y2="224" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></line></svg>
+  </div>
+</div>
+-->
