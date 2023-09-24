@@ -31,7 +31,6 @@ class Vehicle < ApplicationRecord
     "Submarine",
     "Spacecraft"
   ]
-
   VEHICLE_MAKE = [
     "Toyota",
     "Ford",
@@ -70,9 +69,6 @@ class Vehicle < ApplicationRecord
     "Mini",
     "Genesis"
   ]
-
-
   validates :vehicle_type, :make, :model, :year, :mileage, :price, :fuel_type, :transmission, :description, :user, presence: true
   validates :vehicle_type, inclusion: { in: VEHICLE_TYPES }
-
 end

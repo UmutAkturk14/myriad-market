@@ -115,3 +115,6 @@ gem 'friendly_id', '~> 5.4.0'
 
 # Inline SVG
 gem 'inline_svg'
+
+# PG Search
+gem "pg_search"

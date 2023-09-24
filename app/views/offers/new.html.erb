@@ -112,7 +112,7 @@
       $("#forms article").hide();
       const selectedOptionValue = $(this).val();
       console.log($(`#form-${selectedOptionValue.toLowerCase()}`));
-      $(`#form-${selectedOptionValue.toLowerCase()}`).show();
+      $(`#form-${selectedOptionValue.toLowerCase()}`).fadeIn(750);
     });
   });
 </script>

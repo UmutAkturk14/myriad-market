@@ -43,5 +43,4 @@ class Property < ApplicationRecord
   validates :price, numericality: true
   validates :property_type, inclusion: { in: ARCHITECTURAL_PROPERTIES }
   validates :floor, inclusion: { in: 1..100 }
-
 end

@@ -17,6 +17,9 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  # Search
+  get 'search', to: 'pages#search', as: 'search'
+
   # Routes for activation/deactivation
   post "vehicles/:id/activate", to: "vehicles#activate", as: "activate_vehicle"
   post "services/:id/activate", to: "services#activate", as: "activate_service"

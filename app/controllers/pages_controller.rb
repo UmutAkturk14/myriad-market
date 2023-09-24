@@ -23,11 +23,9 @@ class PagesController < ApplicationController
     end
   end
 
-  def chats
-
-  end
-
-  def hello
-
+  def search
+    if params[:search].present?
+      @results = Offer.search_by_title_and_synopsis(params[:search][:query])
+    end
   end
 end

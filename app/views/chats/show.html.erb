@@ -1,6 +1,6 @@
 <div class="flex-1 p-2 sm:p-4 justify-between flex flex-col h-screen" data-controller="chat-subscription">
    <!-- User Info Section -->
-  <div class="flex items-center justify-between p-1 border-b-2 border-gray-200">
+  <div class="flex flex-none items-center justify-between p-1 border-b-2 border-gray-200">
     <!-- User Avatar and Info -->
     <div class="relative flex items-center space-x-4">
         <!-- Online Status Indicator (You can replace this with your own indicator) -->
@@ -61,10 +61,8 @@
     </div>
   </div>
 
-
-
   <!-- Messages Section -->
-  <div id="messages"  data-chat-subscription-target="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch" data-chat-subscription-chat-id-value="<%= @chat.id %>" user="<%= current_user.id %>">
+  <div id="messages"  data-chat-subscription-target="messages" class="flex flex-grow align-top flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch" data-chat-subscription-chat-id-value="<%= @chat.id %>" user="<%= current_user.id %>">
     <% @chat.messages.each do |message| %>
       <%= render "messages/message", message: message %>
     <% end %>
@@ -72,7 +70,7 @@
   </div>
 
   <!-- Message Input Section -->
-  <div class="border-t-2 border-gray-200 px-4 pt-4 mb-16">
+  <div class="border-t-2 flex-none border-gray-200 px-4 pt-4 mb-16">
     <div class="relative flex">
         <span class="absolute inset-y-0 flex items-center">
           <button type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
@@ -118,57 +116,74 @@
 <% end %>
 
 <script>
-  $(document).ready(function () {
-  scrollToBottom(); // Scroll to the bottom of the messages div
+$(document).ready(function () {
+    scrollToBottom(); // Scroll to the bottom of the messages div
 
-  $("#sendMessageButton").click(function (event) {
-    event.preventDefault();
-    sendMessage();
-  });
-
-  $("#messageInput").keypress(function (event) {
-    if (event.which === 13) {
-      event.preventDefault();
-      sendMessage();
-    }
-  });
-
-  function scrollToBottom() {
-    let messagesContainer = $("#messages");
-    messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
-  }
-
-  function sendMessage() {
-    let content = $("#messageInput").val();
-    $("#hiddenContentField").val(content);
-
-    const chatID = parseInt($("#messages").attr("data-chat-subscription-chat-id-value"));
-
-    let messageData = {
-      message: {
-        chat_id: chatID,
-        content: content,
-      },
-    };
-
-    $.ajax({
-      url: `${$("form").attr("action")}`,
-      type: "POST",
-      data: messageData,
-      headers: {
-        "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
-      },
-
-      success: function (response) {
-        $("#messageInput").val("");
-        scrollToBottom();
-      },
-
-      error: function (error) {
-        console.error("Error:", error);
-      },
+    $("#sendMessageButton").click(function (event) {
+        event.preventDefault();
+        sendMessage();
     });
-  }
+
+    $("#messageInput").keypress(function (event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+
+    // Attach a keyup event listener to handle alphanumeric keypress
+    $(document).on("keyup", function (event) {
+        const key = event.key;
+
+        // Check if the input field is not focused
+        if (!$("#messageInput").is(":focus")) {
+            handleAlphanumericKeyPress(key);
+        }
+    });
+
+    function scrollToBottom() {
+        let messagesContainer = $("#messages");
+        messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+    }
+
+    function sendMessage() {
+        let content = $("#messageInput").val();
+        $("#hiddenContentField").val(content);
+
+        const chatID = parseInt($("#messages").attr("data-chat-subscription-chat-id-value"));
+
+        let messageData = {
+            message: {
+                chat_id: chatID,
+                content: content,
+            },
+        };
+
+        $.ajax({
+            url: $("form").attr("action"),
+            type: "POST",
+            data: messageData,
+            headers: {
+                "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                $("#messageInput").val("");
+                scrollToBottom();
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    }
+
+    function handleAlphanumericKeyPress(key) {
+        // Check if the pressed key is alphanumeric
+        if (/^[a-zA-Z0-9]$/.test(key)) {
+            $("#messageInput").val(key);
+            $("#messageInput").focus();
+        }
+    }
 });
+
 
 </script>
