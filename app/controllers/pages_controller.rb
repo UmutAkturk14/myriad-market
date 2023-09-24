@@ -24,11 +24,8 @@ class PagesController < ApplicationController
   end
 
   def search
-    @properties = Property.all
-    @vehicles = Vehicle.all
-    @service = Service.all
-    if params[:query].present?
-      @results = PgSearch.multisearch(params[:query])
+    if params[:search].present?
+      @results = Offer.search_by_title_and_synopsis(params[:search][:query])
     end
   end
 end

@@ -19,16 +19,25 @@
 <script>
   $(document).ready(function () {
     $("#svg").click(function() {
+      submitForm();
+    });
+
+    $("#navbar-input-box").keydown(function(event) {
+      if (event.key === "Enter") {
+        submitForm();
+      }
+    });
+
+    function submitForm() {
       const searchForm = $("#search-form");
       const searchWord = $("#navbar-input-box").val();
       const formSearchInput = $("#search-input");
       formSearchInput.val(searchWord);
       searchForm.submit();
-    })
+    }
   });
-
-
 </script>
+
 
 
 
