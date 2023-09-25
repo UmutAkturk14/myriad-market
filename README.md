@@ -45,7 +45,13 @@ To get started with MM | Myriad Market, follow these steps:
 5. Run the server: `rails server`
 6. Access the application in your web browser at: `http://localhost:3000`
 
+## Upcoming developments
 
+- [ ] **Booking feature for services**
+- **Buy/sell feature**
+- **Loan booking feature**
+- **Notifications**
+- **Transactions**
 
 ---
 
