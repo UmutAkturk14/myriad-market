@@ -47,7 +47,7 @@ To get started with MM | Myriad Market, follow these steps:
 
 ## Upcoming developments
 
-- [ ] **Booking feature for services**
+- **Booking feature for services**
 - **Buy/sell feature**
 - **Loan booking feature**
 - **Notifications**
